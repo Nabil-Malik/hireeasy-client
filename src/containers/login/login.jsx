@@ -1,5 +1,5 @@
 /*
-登陆的路由组件
+Login routing component
  */
 
 import React, {Component} from 'react'
@@ -22,19 +22,19 @@ const ListItem = List.Item
 
 class Login extends Component {
   state = {
-    username: '',  // 用户名
-    password: '',  // 密码
+    username: '',  // username
+    password: '',  // password
   }
 
   login = () => {
     this.props.login(this.state)
   }
 
-  // 处理输入数据的改变: 更新对应的状态
+  // Process input data changes: update the corresponding state
   handleChange = (name, val) => {
-    // 更新状态
+    // update status
     this.setState({
-      [name]: val  // 属性名不是name, 而是name变量的值
+      [name]: val  // The attribute name is not name, but the value of the name variable
     })
   }
 
@@ -45,27 +45,27 @@ class Login extends Component {
   render() {
 
     const {msg, redirectTo} = this.props.user
-    // 如果redirectTo有值, 就需要重定向到指定的路由
+    // If redirectTo has a value, then need to redirect to the specified route
     if(redirectTo) {
       return <Redirect to={redirectTo}/>
     }
 
     return (
       <div>
-        <NavBar>硅&nbsp;谷&nbsp;直&nbsp;聘</NavBar>
+        <NavBar>Hire Easy</NavBar>
         <Logo/>
         <WingBlank>
           <List>
             {msg ? <div className='error-msg'>{msg}</div> : null}
             <WhiteSpace/>
-            <InputItem placeholder='请输入用户名' onChange={val => {this.handleChange('username', val)}}>用户名:</InputItem>
+            <InputItem placeholder='User Name' onChange={val => {this.handleChange('username', val)}}>User Name:</InputItem>
             <WhiteSpace/>
-            <InputItem placeholder='请输入密码' type="password" onChange={val => {this.handleChange('password', val)}}>密&nbsp;&nbsp;&nbsp;码:</InputItem>
+            <InputItem placeholder='Password' type="password" onChange={val => {this.handleChange('password', val)}}>Password:</InputItem>
             <WhiteSpace/>
 
-            <Button type='primary' onClick={this.login}>登&nbsp;&nbsp;&nbsp;陆</Button>
+            <Button type='primary' onClick={this.login}>Login</Button>
             <WhiteSpace/>
-            <Button onClick={this.toRegister}>还没有账户</Button>
+            <Button onClick={this.toRegister}>No account yet</Button>
           </List>
         </WingBlank>
       </div>

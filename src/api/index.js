@@ -1,24 +1,24 @@
 /*
-包含了n个接口请求的函数的模块
-函数返回值为: promise
+A module containing certain functions required by the interface
+The return value of this function: promise
  */
 
 import ajax from './ajax'
 
-// 注册接口
+// Registration interface
 export const reqRegister = (user) => ajax('/register', user, 'POST')
-// 登陆接口
+// Login interface
 export const reqLogin = ({username, password}) => ajax('/login',{username, password}, 'POST')
-// 更新用户接口
+// Update user interface
 export const reqUpdateUser = (user) => ajax('/update', user, 'POST')
-// 获取用户信息
+// Get user interface
 export const reqUser = () => ajax('/user')
 
-// 获取用户列表
+//Get user list interface
 export const reqUserList = (type) => ajax('/userlist', {type})
 
-// 获取当前用户的聊天消息列表
+// Get the current user's chat message list
 export const reqChatMsgList = () => ajax('/msglist')
 
-// 修改指定消息为已读
+// Modify the specified message as read
 export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')

@@ -1,5 +1,5 @@
 /*
-提示找不到页面的UI路由组件
+ UI routing component of the page cannot be found
  */
 
 import React from "react"
@@ -10,12 +10,12 @@ class NotFound extends React.Component {
     return (
       <div>
         <div>
-          <h2>抱歉，找不到该页面!</h2>
+          <h2>Sorry, the page was not found!</h2>
           <Button
             type="primary"
             onClick={() => this.props.history.replace("/")}
           >
-            回到首页
+            Homepage
           </Button>
         </div>
       </div>

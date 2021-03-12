@@ -1,5 +1,5 @@
 /*
-包含n个reducer函数: 根据老的state和指定的action返回一个新的state
+Contains reducer functions: returns a new state based on the old state and the specified action
  */
 import {combineReducers} from 'redux'
 
@@ -17,22 +17,22 @@ import {
 import {getRedirectTo} from '../utils'
 
 const initUser = {
-  username: '', // 用户名
-  type: '', // 用户类型 dashen/laoban
-  msg: '', // 错误提示信息
-  redirectTo: '' // 需要自动重定向的路由路径
+  username: '',
+  type: '', 
+  msg: '', 
+  redirectTo: '' 
 }
-// 产生user状态的reducer
+// The reducer that generates the user state
 function user(state=initUser, action) {
   switch (action.type) {
-    case AUTH_SUCCESS: // data是user
-      const {type, header} = action.data
-      return {...action.data, redirectTo: getRedirectTo(type, header)}
-    case ERROR_MSG: // data是msg
+    case AUTH_SUCCESS: // data is user
+      const {type, avatar} = action.data
+      return {...action.data, redirectTo: getRedirectTo(type, avatar)}
+    case ERROR_MSG: // data is msg
       return {...state, msg: action.data}
-    case RECEIVE_USER: // data是user
+    case RECEIVE_USER: // data is user
       return action.data
-    case RESET_USER: // data是msg
+    case RESET_USER: //data is msg
       return {...initUser, msg: action.data}
     default:
       return state
@@ -41,10 +41,10 @@ function user(state=initUser, action) {
 
 
 const initUserList = []
-// 产生userlist状态的reducer
+// The reducer that generates the userlist state
 function userList(state=initUserList, action) {
   switch (action.type) {
-    case RECEIVE_USER_LIST:  // data为userList
+    case RECEIVE_USER_LIST:  // data is userList
       return action.data
     default:
       return state
@@ -52,12 +52,12 @@ function userList(state=initUserList, action) {
 }
 
 const initChat = {
-  users: {}, // 所有用户信息的对象  属性名: userid, 属性值是: {username, header}
-  chatMsgs: [], // 当前用户所有相关msg的数组
-  unReadCount: 0 // 总的未读数量
+  users: {}, // Object of all user information Attribute name: userid, attribute value is: {username, avatar}
+  chatMsgs: [], // Array of all related msgs of the current user
+  unReadCount: 0 // Total unread count
 }
 
-// 产生聊天状态的reducer
+// The reducer that generated the chat state
 function chat(state=initChat, action) {
   switch (action.type) {
     case RECEIVE_MSG_LIST:  // data: {users, chatMsgs}
@@ -84,9 +84,9 @@ function chat(state=initChat, action) {
       return {
         users: state.users,
         chatMsgs: state.chatMsgs.map(msg => {
-          if(msg.from===from && msg.to===to && !msg.read) { // 需要更新
+          if(msg.from===from && msg.to===to && !msg.read) { 
             return {...msg, read: true}
-          } else {// 不需要
+          } else {
             return msg
           }
         }),
@@ -102,5 +102,5 @@ export default combineReducers({
   userList,
   chat
 })
-// 向外暴露的状态的结构: {user: {}, userList: [], chat: {}}
+
 

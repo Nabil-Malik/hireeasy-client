@@ -1,14 +1,14 @@
 /*
-能发送ajax请求的函数模块
-函数的返回值是promise对象
+Function module that can send ajax request
+The return value of the function is a promise object
  */
 import axios from 'axios'
 const baseUrl = ''
 // const baseUrl = 'http://localhost:4000'
 export default function ajax(url, data={}, type='GET') {
   url = baseUrl + url
-  if(type==='GET') { // 发送GET请求
-    // 拼请求参数串
+  if(type==='GET') { // Send GET request
+    // Combine request parameter string
     // data: {username: tom, password: 123}
     // paramStr: username=tom&password=123
     let paramStr = ''
@@ -18,10 +18,10 @@ export default function ajax(url, data={}, type='GET') {
     if(paramStr) {
       paramStr = paramStr.substring(0, paramStr.length-1)
     }
-    // 使用axios发get请求
+    // Use axios to send get request
     return axios.get(url + '?' + paramStr)
-  } else {// 发送POST请求
-    // 使用axios发post请求
+  } else {// Send POST request
+    // Use axios to send post request
     return axios.post(url, data)
   }
 }

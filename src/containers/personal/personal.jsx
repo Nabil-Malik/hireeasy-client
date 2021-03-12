@@ -1,5 +1,5 @@
 /*
-用户个人中心路由组件
+User personal center routing component
  */
 
 import React from 'react'
@@ -14,16 +14,16 @@ const Brief = Item.Brief
 class Personal extends React.Component {
 
   logout = () => {
-    // alert('-----')
-    Modal.alert('退出', '确定退出登陆吗?', [
-      {text: '取消'},
+    
+    Modal.alert('Logout', 'Are you sure to log out?', [
+      {text: 'Cancle'},
       {
-        text: '确定',
+        text: 'Yes',
         onPress: ()=> {
 
-          // 干掉cookie中userid
+          
           Cookies.remove('userid')
-          // 干掉redux管理user
+         
           this.props.resetUser()
         }
       }
@@ -31,25 +31,25 @@ class Personal extends React.Component {
   }
 
   render() {
-    const {username, info, header, company, post, salary} = this.props.user
+    const {username, info, avatar, company, post, salary} = this.props.user
     return (
       <div style={{marginBottom:50, marginTop:50}}>
         <Result
-          img={<img src={require(`../../assets/images/${header}.png`)} style={{width: 50}} alt="header"/>}
+          img={<img src={require(`../../assets/images/${avatar}.png`)} style={{width: 50}} alt="avatar"/>}
           title={username}
           message={company}
         />
 
-        <List renderHeader={() => '相关信息'}>
+        <List renderHeader={() => 'Information'}>
           <Item multipleLine>
-            <Brief>职位: {post}</Brief>
-            <Brief>简介: {info}</Brief>
-            {salary ? <Brief>薪资: {salary}</Brief> : null}
+            <Brief>Position: {post}</Brief>
+            <Brief>Introduction: {info}</Brief>
+            {/* {salary ? <Brief>Salary: {salary}</Brief> : null} */}
           </Item>
         </List>
         <WhiteSpace/>
         <List>
-          <Button type='warning' onClick={this.logout}>退出登录</Button>
+          <Button type='warning' onClick={this.logout}>Logout</Button>
         </List>
       </div>
     )

@@ -1,5 +1,5 @@
 /*
-redux最核心的管理对象模块
+The core management object module of redux
  */
 import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
@@ -7,5 +7,5 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 
 import reducers from './reducers'
 
-// 向外暴露store对象
+// Expose store objects
 export default createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))

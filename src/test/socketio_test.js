@@ -1,12 +1,12 @@
 import io from 'socket.io-client'
 
-// 连接服务器, 得到与服务器的连接对象
+//Connect to the server, get the connection object with the server
 const socket = io('ws://localhost:4000')
-// 绑定监听, 接收服务器发送的消息
+// Bind the monitor, receive the message sent by the server
 socket.on('receiveMsg', function (data) {
-  console.log('客户端接收服务器发送的消息', data)
+  console.log('The client receives the message sent by the server', data)
 })
 
-// 发送消息
+//Send message
 socket.emit('sendMsg', {name: 'abc'})
-console.log('客户端向服务器发消息', {name: 'abc'})
+console.log('The client sends a message to the server', {name: 'abc'})

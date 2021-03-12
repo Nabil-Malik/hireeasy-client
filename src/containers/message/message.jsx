@@ -1,5 +1,5 @@
 /*
-消息界面路由容器组件
+Message interface routing container component
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
@@ -7,48 +7,43 @@ import {List, Badge} from 'antd-mobile'
 
 const Item = List.Item
 const Brief = Item.Brief
-/*
-对chatMsgs按chat_id进行分组, 并得到每个组的lastMsg组成的数组
-1. 找出每个聊天的lastMsg, 并用一个对象容器来保存 {chat_id, lastMsg}
-2. 得到所有lastMsg的数组
-3. 对数组进行排序(按create_time降序)
- */
+
 function getLastMsgs(chatMsgs, userid) {
-  // 1. 找出每个聊天的lastMsg, 并用一个对象容器来保存 {chat_id:lastMsg}
+  // Find out the lastMsg of each chat, and use an object container to save {chat_id:lastMsg}
   const lastMsgObjs = {}
   chatMsgs.forEach(msg => {
 
-    // 对msg进行个体的统计
+    // Perform individual statistics on msg
     if(msg.to===userid && !msg.read) {
       msg.unReadCount = 1
     } else {
       msg.unReadCount = 0
     }
 
-    // 得到msg的聊天标识id
+    // Get the chat ID of msg
     const chatId = msg.chat_id
-    // 获取已保存的当前组件的lastMsg
+    // Get the saved lastMsg of the current component
     let lastMsg = lastMsgObjs[chatId]
-    // 没有
-    if(!lastMsg) { // 当前msg就是所在组的lastMsg
+  
+    if(!lastMsg) { //The current msg is the lastMsg of the group
       lastMsgObjs[chatId] = msg
-    } else {// 有
-      // 累加unReadCount=已经统计的 + 当前msg的
+    } else {
+      // Accumulated unReadCount = already counted + current msg
       const unReadCount = lastMsg.unReadCount + msg.unReadCount
-      // 如果msg比lastMsg晚, 就将msg保存为lastMsg
+      // If msg is later than lastMsg, save msg as lastMsg
       if(msg.create_time>lastMsg.create_time) {
         lastMsgObjs[chatId] = msg
       }
-      //将unReadCount保存在最新的lastMsg上
+      //Save unReadCount on the latest lastMsg
       lastMsgObjs[chatId].unReadCount = unReadCount
     }
   })
 
-  // 2. 得到所有lastMsg的数组
+  // Get the array of all lastMsg
   const lastMsgs = Object.values(lastMsgObjs)
 
-  // 3. 对数组进行排序(按create_time降序)
-  lastMsgs.sort(function (m1, m2) { // 如果结果<0, 将m1放在前面, 如果结果为0, 不变, 如果结果>0, m2前面
+  // Sort the array (descending by create_time)
+  lastMsgs.sort(function (m1, m2) { // If the result is <0, put m1 in front, if the result is 0, unchanged, if the result is >0, put m2 in front
     return m2.create_time-m1.create_time
   })
   console.log(lastMsgs)
@@ -61,7 +56,7 @@ class Message extends Component {
     const {user} = this.props
     const {users, chatMsgs} = this.props.chat
 
-    // 对chatMsgs按chat_id进行分组
+    // Group chatMsgs by chat_id
     const lastMsgs = getLastMsgs(chatMsgs, user._id)
 
 
@@ -70,15 +65,15 @@ class Message extends Component {
 
         {
           lastMsgs.map(msg =>{
-            // 得到目标用户的id
+            // Get the id of the target user
             const targetUserId = msg.to===user._id ? msg.from : msg.to
-            // 得到目标用户的信息
+            // Get information about target users
             const targetUser = users[targetUserId]
             return (
               <Item
                 key={msg._id}
                 extra={<Badge text={msg.unReadCount}/>}
-                thumb={targetUser.header ? require(`../../assets/images/${targetUser.header}.png`) : null}
+                thumb={targetUser.avatar ? require(`../../assets/images/${targetUser.avatar}.png`) : null}
                 arrow='horizontal'
                 onClick={() => this.props.history.push(`/chat/${targetUserId}`)}
               >

@@ -1,17 +1,17 @@
 /*
-主界面的路由组件
+Routing component of the main interface
  */
 
 import React, {Component} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import Cookies from 'js-cookie'  // 可以操作前端cookie的对象 set()/get()/remove()
+import Cookies from 'js-cookie'  // Objects that can manipulate front-end cookies set()/get()/remove()
 import {NavBar} from 'antd-mobile'
 
-import LaobanInfo from '../laoban-info/laoban-info'
-import DashenInfo from '../dashen-info/dashen-info'
-import Dashen from '../dashen/dashen'
-import Laoban from '../laoban/laoban'
+import JobPosterInfo from '../jobPoster-info/jobPoster-info'
+import JobSeekerInfo from '../jobSeeker-info/jobSeeker-info'
+import JobSeeker from '../jobSeeker/jobSeeker'
+import JobPoster from '../jobPoster/jobPoster'
 import Message from '../message/message'
 import Personal from '../personal/personal'
 import NotFound from '../../components/not-found/not-found'
@@ -24,85 +24,85 @@ import {getUser} from '../../redux/actions'
 
 class Main extends Component {
 
-  // 给组件对象添加属性
-  navList = [ // 包含所有导航组件的相关信息数据
+  // Add properties to component objects
+  navList = [ // Contains relevant information data of all navigation components
     {
-      path: '/laoban', // 路由路径
-      component: Laoban,
-      title: '大神列表',
-      icon: 'dashen',
-      text: '大神',
+      path: '/jobPoster', //Routing path
+      component: JobPoster,
+      title: 'Job seeker list',
+      icon: 'jobseeker',
+      text: 'Job seeker',
     },
     {
-      path: '/dashen', // 路由路径
-      component: Dashen,
-      title: '老板列表',
-      icon: 'laoban',
-      text: '老板',
+      path: '/jobSeeker', // Routing path
+      component: JobSeeker,
+      title: 'Job poster list',
+      icon: 'jobposter',
+      text: 'Job poster',
     },
     {
-      path: '/message', // 路由路径
+      path: '/message', // Routing path
       component: Message,
-      title: '消息列表',
+      title: 'Message list',
       icon: 'message',
-      text: '消息',
+      text: 'Message',
     },
     {
-      path: '/personal', // 路由路径
+      path: '/personal', // Routing path
       component: Personal,
-      title: '用户中心',
+      title: 'Personal',
       icon: 'personal',
-      text: '个人',
+      text: 'Personal',
     }
   ]
 
+  // Realize automatic login:
   componentDidMount () {
-    //登陆过(cookie中有userid), 但没有有登陆(redux管理的user中没有_id) 发请求获取对应的user
+    //Login (userid in the cookie), but no login (no _id in the user managed by redux) Send a request to get the corresponding user
     const userid = Cookies.get('userid')
     const {_id} = this.props.user
     if(userid && !_id) {
-      // 发送异步请求, 获取user
-      // console.log('发送ajax请求获取user')
+      // Send asynchronous request, get user     
       this.props.getUser()
     }
   }
 
   render() {
 
-    // 读取cookie中的userid
+    // Read the userid in the cookie
     const userid = Cookies.get('userid')
-    // 如果没有, 自动重定向到登陆界面
+    // If not, automatically redirect to the login interface
     if(!userid) {
       return <Redirect to='/login'/>
     }
-    // 如果有,读取redux中的user状态
+    // If have userid, read the user status in redux
     const {user, unReadCount} = this.props
-    // 如果user有没有_id, 返回null(不做任何显示)
+    // If the user does has _id, return null (do not display anything)
     // debugger
     if(!user._id) {
       return null
     } else {
-      // 如果有_id, 显示对应的界面
-      // 如果请求根路径, 根据user的type和header来计算出一个重定向的路由路径, 并自动重定向
+      // If there is _id, display the corresponding interface
+      // If the root path is requested, a redirected routing path is calculated according to the user's type and avatar, and automatically redirected
       let path = this.props.location.pathname
       if(path==='/') {
-        // 得到一个重定向的路由路径
-        path = getRedirectTo(user.type, user.header)
+        // Get a redirected routing path
+        path = getRedirectTo(user.type, user.avatar)
         return <Redirect to= {path}/>
       }
     }
 
     const {navList} = this
-    const path = this.props.location.pathname // 请求的路径
-    const currentNav = navList.find(nav=> nav.path===path) // 得到当前的nav, 可能没有
+    const path = this.props.location.pathname // Requested path
+    const currentNav = navList.find(nav=> nav.path===path) // Get the current nav, maybe not
 
     if(currentNav) {
-      // 决定哪个路由需要隐藏
-      if(user.type==='laoban') {
-        // 隐藏数组的第2个
+      //Decide which route needs to be hidden
+      if(user.type==='jobPoster') {
+        // Hide the second of the array
         navList[1].hide = true
       } else {
-        // 隐藏数组的第1个
+        // Hide the first of the array
         navList[0].hide = true
       }
     }
@@ -114,8 +114,8 @@ class Main extends Component {
           {
             navList.map(nav => <Route key={nav.path} path={nav.path} component={nav.component}/>)
           }
-          <Route path='/laobaninfo' component={LaobanInfo}/>
-          <Route path='/dasheninfo' component={DashenInfo}/>
+          <Route path='/jobPosterInfo' component={JobPosterInfo}/>
+          <Route path='/jobSeekerInfo' component={JobSeekerInfo}/>
           <Route path='/chat/:userid' component={Chat}/>
 
           <Route component={NotFound}/>
@@ -130,14 +130,3 @@ export default connect(
   state => ({user: state.user, unReadCount: state.chat.unReadCount}),
   {getUser}
 )(Main)
-
-/*
-1. 实现自动登陆:
-  1. componentDidMount()
-    登陆过(cookie中有userid), 但没有有登陆(redux管理的user中没有_id) 发请求获取对应的user:
-  2. render()
-    1). 如果cookie中没有userid, 直接重定向到login
-    2). 判断redux管理的user中是否有_id, 如果没有, 暂时不做任何显示
-    3). 如果有, 说明当前已经登陆, 显示对应的界面
-    4). 如果请求根路径: 根据user的type和header来计算出一个重定向的路由路径, 并自动重定向
- */

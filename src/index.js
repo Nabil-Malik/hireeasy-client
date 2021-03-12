@@ -1,6 +1,3 @@
-/*
-入口JS
- */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {HashRouter, Switch, Route} from 'react-router-dom'
@@ -21,7 +18,7 @@ ReactDOM.render((
       <Switch>
         <Route path="/register" component={Rigister}/>
         <Route path="/login" component={Login}/>
-        <Route component={Main}></Route> 默认路由
+        <Route component={Main}></Route> //default route
       </Switch>
     </HashRouter>
   </Provider>

@@ -1,5 +1,5 @@
 /*
-对话聊天的路由组件
+The routing component of the conversation chat
  */
 
 import React, {Component} from 'react'
@@ -16,12 +16,12 @@ class Chat extends Component {
 
   state = {
     content: '',
-    isShow: false // 是否显示表情列表
+    isShow: false // Whether to show the emoticon list
   }
 
-  // 在第一次render()之前回调
+  // Call back before the first render()
   componentWillMount () {
-    // 初始化表情列表数据
+    // Initialize emoticon list data
     const emojis = ['😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀'
       ,'😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣'
       ,'😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣'
@@ -30,18 +30,18 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    // 初始显示列表
+    // Initial display list
     window.scrollTo(0, document.body.scrollHeight)
 
   }
 
   componentDidUpdate () {
-    // 更新显示列表
+    // Update the display list
     window.scrollTo(0, document.body.scrollHeight)
   }
 
-  componentWillUnmount () { // 在退出之前
-    // 发请求更新消息的未读状态
+  componentWillUnmount () { // Before exiting
+    //Unread status of sending request update message
     const from = this.props.match.params.userid
     const to = this.props.user._id
     this.props.readMsg(from, to)
@@ -51,7 +51,7 @@ class Chat extends Component {
     const isShow = !this.state.isShow
     this.setState({isShow})
     if(isShow) {
-      // 异步手动派发resize事件,解决表情列表显示的bug
+      // Asynchronously manually dispatch the resize event to solve the bug in the emoji list display
       setTimeout(() => {
         window.dispatchEvent(new Event('resize'))
       }, 0)
@@ -59,15 +59,15 @@ class Chat extends Component {
   }
 
   handleSend = () => {
-    // 收集数据
+    // Data collection
     const from = this.props.user._id
     const to = this.props.match.params.userid
     const content = this.state.content.trim()
-    // 发送请求(发消息)
+    // Send request (send message)
     if(content) {
       this.props.sendMsg({from, to, content})
     }
-    // 清除输入数据
+    // Clear input data
     this.setState({
       content: '',
       isShow: false
@@ -77,20 +77,20 @@ class Chat extends Component {
     const {user} = this.props
     const {users, chatMsgs} = this.props.chat
 
-    // 计算当前聊天的chatId
+    // Calculate the chatId of the current chat
     const meId = user._id
-    if(!users[meId]) { // 如果还没有获取数据, 直接不做任何显示
+    if(!users[meId]) { // If the data has not been obtained, nothing will be displayed directly
       return null
     }
     const targetId = this.props.match.params.userid
     const chatId = [meId, targetId].sort().join('_')
 
-    // 对chatMsgs进行过滤
+    // Filter chatMsgs
     const msgs = chatMsgs.filter(msg => msg.chat_id===chatId)
 
-    // 得到目标用户的header图片对象
-    const targetHeader = users[targetId].header
-    const targetIcon = targetHeader ? require(`../../assets/images/${targetHeader}.png`) : null
+    // Get the avatar image object of the target user
+    const targetAvatar = users[targetId].avatar
+    const targetIcon = targetAvatar ? require(`../../assets/images/${targetAvatar}.png`) : null
 
     return (
       <div id='chat-page'>
@@ -106,7 +106,7 @@ class Chat extends Component {
           <QueueAnim type='left' delay={100}>
             {
               msgs.map(msg => {
-                if(targetId===msg.from) {// 对方发给我的
+                if(targetId===msg.from) {// Sent to me
                   return (
                     <Item
                       key={msg._id}
@@ -115,12 +115,12 @@ class Chat extends Component {
                       {msg.content}
                     </Item>
                   )
-                } else { // 我发给对方的
+                } else { // I sent 
                   return (
                     <Item
                       key={msg._id}
                       className='chat-me'
-                      extra='我'
+                      extra='Me'
                     >
                       {msg.content}
                     </Item>
@@ -134,14 +134,14 @@ class Chat extends Component {
 
         <div className='am-tab-bar'>
           <InputItem
-            placeholder="请输入"
+            placeholder="Please enter"
             value={this.state.content}
             onChange={val => this.setState({content: val})}
             onFocus={() => this.setState({isShow: false})}
             extra={
               <span>
                 <span onClick={this.toggleShow} style={{marginRight:5}}>😊</span>
-                <span onClick={this.handleSend}>发送</span>
+                <span onClick={this.handleSend}>Send</span>
               </span>
             }
           />

@@ -1,16 +1,16 @@
 /*
-老板主界面路由容器组件
+Job seeker main interface routing container component
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getUserList} from '../../redux/actions'
 
 import UserList from '../../components/user-list/user-list'
-
-class Laoban extends Component {
+ 
+class JobSeeker extends Component {
   componentDidMount () {
-    // 获取获取userList
-    this.props.getUserList('dashen')
+    // get userList
+    this.props.getUserList('jobPoster')
   }
   render () {
     return (
@@ -22,4 +22,4 @@ class Laoban extends Component {
 export default connect(
   state => ({userList: state.userList}),
   {getUserList}
-)(Laoban)
+)(JobSeeker)

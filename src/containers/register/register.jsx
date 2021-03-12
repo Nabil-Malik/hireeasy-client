@@ -1,5 +1,5 @@
 /*
-注册的路由组件
+Registered routing components
  */
 
 import React, {Component} from 'react'
@@ -22,23 +22,23 @@ const ListItem = List.Item
 
 class Register extends Component {
   state = {
-    username: '',  // 用户名
-    password: '',  // 密码
-    password2: '',  // 确认密码
-    type: 'laoban',  // 用户类型名称   dashen/laoban
+    username: '',  //  username
+    password: '',  //  password
+    password2: '',  // password2
+    type: 'jobSeeker',  // userType   
   }
 
-  // 点击注册调用
+  // Call when click to register
   register = () => {
-    //console.log(this.state)
+    
     this.props.register(this.state)
   }
 
-  // 处理输入数据的改变: 更新对应的状态
+  // Process input data changes: update the corresponding state
   handleChange = (name, val) => {
-    // 更新状态
+    // update status
     this.setState({
-      [name]: val  // 属性名不是name, 而是name变量的值
+      [name]: val  // The attribute name is not name, but the value of the name variable
     })
   }
 
@@ -49,36 +49,36 @@ class Register extends Component {
   render() {
     const {type} = this.state
     const {msg, redirectTo} = this.props.user
-    // 如果redirectTo有值, 就需要重定向到指定的路由
+    // If redirectTo has a value, you need to redirect to the specified route
     if(redirectTo) {
       return <Redirect to={redirectTo}/>
     }
 
     return (
       <div>
-        <NavBar>硅&nbsp;谷&nbsp;直&nbsp;聘</NavBar>
+        <NavBar>Hire Easy</NavBar>
         <Logo/>
         <WingBlank>
           <List>
             {msg ? <div className='error-msg'>{msg}</div> : null}
             <WhiteSpace/>
-            <InputItem placeholder='请输入用户名' onChange={val => {this.handleChange('username', val)}}>用户名:</InputItem>
+            <InputItem placeholder='User Name' onChange={val => {this.handleChange('username', val)}}>User Name:</InputItem>
             <WhiteSpace/>
-            <InputItem placeholder='请输入密码' type="password" onChange={val => {this.handleChange('password', val)}}>密&nbsp;&nbsp;&nbsp;码:</InputItem>
+            <InputItem placeholder='Password' type="password" onChange={val => {this.handleChange('password', val)}}>Password:</InputItem>
             <WhiteSpace/>
-            <InputItem placeholder='请输入确认密码' type="password" onChange={val => {this.handleChange('password2', val)}}>确认密码:</InputItem>
+            <InputItem placeholder='Confirm Password' type="password" onChange={val => {this.handleChange('password2', val)}}>Confirm:</InputItem>
             <WhiteSpace/>
             <ListItem>
-              <span>用户类型:</span>
+              <span>User type:</span>
               &nbsp;&nbsp;&nbsp;
-              <Radio checked={type==='dashen'} onChange={() => this.handleChange('type', 'dashen')}>大神</Radio>
+              <Radio checked={type==='jobSeeker'} onChange={() => this.handleChange('type', 'jobSeeker')}>Job seeker</Radio>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Radio checked={type==='laoban'}  onClick={() => this.handleChange('type', 'laoban')}>老板</Radio>
+              <Radio checked={type==='jobPoster'}  onClick={() => this.handleChange('type', 'jobPoster')}>Job poster</Radio>
             </ListItem>
             <WhiteSpace/>
-            <Button type='primary' onClick={this.register}>注&nbsp;&nbsp;&nbsp;册</Button>
+            <Button type='primary' onClick={this.register}>Register</Button>
             <WhiteSpace/>
-            <Button onClick={this.toLogin}>已有账户</Button>
+            <Button onClick={this.toLogin}>Login</Button>
           </List>
         </WingBlank>
       </div>
