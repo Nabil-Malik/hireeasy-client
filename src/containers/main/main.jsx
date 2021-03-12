@@ -16,6 +16,8 @@ import Message from '../message/message'
 import Personal from '../personal/personal'
 import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
+import CreateJob from '../createJob/createJob'
+// import JobDetail from '../../components/job-detail/job-detail'
 import Chat from '../chat/chat'
 
 
@@ -29,30 +31,39 @@ class Main extends Component {
     {
       path: '/jobPoster', //Routing path
       component: JobPoster,
-      title: 'Job seeker list',
+      //title: 'Job seeker list',
+      title: 'Job list',
       icon: 'jobseeker',
-      text: 'Job seeker',
+      //text: 'Job seeker',
+      text: 'Job list'
     },
     {
       path: '/jobSeeker', // Routing path
       component: JobSeeker,
       title: 'Job poster list',
       icon: 'jobposter',
-      text: 'Job poster',
+      text: 'Job poster'
+    },
+    {
+      path: '/createJob', // Routing path
+      component: CreateJob,
+      title: 'Create Job',
+      icon: 'jobposter',
+      text: 'Create Job'
     },
     {
       path: '/message', // Routing path
       component: Message,
       title: 'Message list',
       icon: 'message',
-      text: 'Message',
+      text: 'Message'
     },
     {
       path: '/personal', // Routing path
       component: Personal,
       title: 'Personal',
       icon: 'personal',
-      text: 'Personal',
+      text: 'Personal'
     }
   ]
 
@@ -116,6 +127,7 @@ class Main extends Component {
           }
           <Route path='/jobPosterInfo' component={JobPosterInfo}/>
           <Route path='/jobSeekerInfo' component={JobSeekerInfo}/>
+          {/* <Route path='/job/:jobid' component={JobDetail}/> */}
           <Route path='/chat/:userid' component={Chat}/>
 
           <Route component={NotFound}/>

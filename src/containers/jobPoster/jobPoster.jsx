@@ -3,23 +3,25 @@ Job poster main interface routing container component
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getUserList} from '../../redux/actions'
-
-import UserList from '../../components/user-list/user-list'
+import Cookies from 'js-cookie' 
+import {getJobList} from '../../redux/actions'
+import JobList from '../../components/job-list/job-list'
 
 class JobPoster extends Component {
   componentDidMount () {
     // get user List
-    this.props.getUserList('jobSeeker')
+    
+    const userid = Cookies.get('userid')   
+    this.props.getJobList(userid)
   }
   render () {
-    return (
-      <UserList userList={this.props.userList}/>
+    return (      
+       <JobList jobList={this.props.jobList}/>
     )
   }
 }
 
 export default connect(
-  state => ({userList: state.userList}),
-  {getUserList}
+  state => ({jobList: state.jobList}),
+  {getJobList}
 )(JobPoster)

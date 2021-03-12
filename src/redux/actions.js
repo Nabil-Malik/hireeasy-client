@@ -10,6 +10,8 @@ import {
   RECEIVE_USER,
   RESET_USER,
   RECEIVE_USER_LIST,
+  CREATE_JOB,
+  RECEIVE_JOB_LIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG,
   MSG_READ
@@ -20,6 +22,8 @@ import {
   reqUpdateUser,
   reqUser,
   reqUserList,
+  reqCreateJob,
+  reqJobList,
   reqChatMsgList,
   reqReadMsg
 } from '../api'
@@ -90,6 +94,10 @@ const receiveUser = (user) => ({type: RECEIVE_USER, data:user})
 export const resetUser = (msg) => ({type: RESET_USER, data: msg})
 // Synchronous action for receiving user list
 const receiveUserList = (userList) => ({type: RECEIVE_USER_LIST, data: userList})
+// Synchronous action for creating job
+const postJob=(job)=>({type:CREATE_JOB,data:job})
+// Synchronous action for receiving job list
+const receiveJobList = (jobList) => ({type: RECEIVE_JOB_LIST, data: jobList})
 // Synchronous action for receiving message list
 const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
 // Synchronous action that receives a message
@@ -195,6 +203,56 @@ export const getUserList = (type) => {
     // After getting the result, distribute a synchronous action
     if(result.code===0) {
       dispatch(receiveUserList(result.data))
+    }
+  }
+}
+
+
+// Create job asynchronous action
+export const createJob = (job) => {
+  const {jobTitle, jobType, content,company,position,posterId} = job
+  // Do the front-end check of the form, if it fails, return a synchronous action of errorMsg
+  if(!jobTitle) {
+    return errorMsg('Job Title is required!')
+  } else if(!jobType) {
+    return errorMsg('Job Type is required!')
+  }else if(!content){
+    return errorMsg('Content is required!')
+  }else if(!company){
+    return errorMsg('Company is required!')
+  }else if(!position){
+    return errorMsg('Position is required!')
+  }else if(!posterId){
+    return errorMsg('Poster Id is required!')
+  }
+  // The form data is valid, return an asynchronous action function that sends an ajax request
+  return async dispatch => {
+    
+    const response = await reqCreateJob(job)
+    const result = response.data //  {code: 0/1, data: user, msg: ''}
+    if(result.code===0) {
+      //getMsgList(dispatch, result.data._id)
+      // Dispatch authorized synchronization actions
+      dispatch(postJob(result.data))
+    } else { 
+      // Dispatch synchronization error messages
+      dispatch(errorMsg(result.msg))
+    }
+  }
+}
+
+// Asynchronous action to get job list
+export const getJobList = (posterId) => {
+  return async dispatch => {
+    // Perform asynchronous ajax request
+    const response = await reqJobList(posterId)
+    const result = response.data
+    // After getting the result, distribute a synchronous action
+    if(result.code===0) {
+      dispatch(receiveJobList(result.data))
+    }
+    else{
+      dispatch(errorMsg(result.msg));
     }
   }
 }

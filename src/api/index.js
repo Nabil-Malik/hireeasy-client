@@ -17,6 +17,12 @@ export const reqUser = () => ajax('/user')
 //Get user list interface
 export const reqUserList = (type) => ajax('/userlist', {type})
 
+//Create job 
+export const reqCreateJob = (job) => ajax('/createJob',job,'POST')
+
+//Get job list interface
+export const reqJobList = (posterId) => ajax('/joblist',{posterId})
+
 // Get the current user's chat message list
 export const reqChatMsgList = () => ajax('/msglist')
 
