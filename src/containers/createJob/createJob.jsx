@@ -34,6 +34,7 @@ class CreateJob extends Component {
   // Call when click to register
   createJob = () => {    
     this.props.createJob(this.state)
+    this.props.history.replace('/')
   }
 
   // Process input data changes: update the corresponding state
@@ -64,7 +65,8 @@ class CreateJob extends Component {
       <div>               
         <WingBlank>
           <List>
-            {/* {msg ? <div className='error-msg'>{msg}</div> : null} */}
+            {/* {msg ? <div className='error-msg'>{msg}</div> : null} */}            
+            <WhiteSpace/>
             <WhiteSpace/>
             <WhiteSpace/>
             <WhiteSpace/>
@@ -89,7 +91,7 @@ class CreateJob extends Component {
             <WhiteSpace/>
             <Button type='primary' onClick={this.createJob}>Post Job</Button>
             <WhiteSpace/>
-            <Button onClick={this.toMain}>Main</Button>
+            {/* <Button type='danger' onClick={this.toMain}>Main</Button> */}
           </List>
         </WingBlank>
       </div>

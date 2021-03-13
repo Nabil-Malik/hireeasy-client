@@ -115,6 +115,7 @@ class Main extends Component {
       } else {
         // Hide the first of the array
         navList[0].hide = true
+        navList[2].hide = true
       }
     }
 
