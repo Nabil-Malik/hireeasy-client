@@ -3,7 +3,7 @@
 	request: POST
 	
 #2 Login:
-	url: localhost:3005/register
+	url: localhost:3005/login
 	request: POST
 
 #3 Update User Information
@@ -14,11 +14,11 @@
     url: localhost:3005/user
 	request: GET
 	
-#5 Read Current User Information
+#5 Read All Current Users Information
     url: localhost:3005/userlist
 	request: GET
 	
-#6 Read Current User Information
+#6 Read current user's msg list
     url: localhost:3005/msglist
 	request: GET
 
