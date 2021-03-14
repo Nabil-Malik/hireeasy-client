@@ -25,7 +25,7 @@
 
 
 
-## git comand
+## git command
     1). create a local git repo
         Create .gitignore configuration
         git init
