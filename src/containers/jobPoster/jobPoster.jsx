@@ -12,7 +12,7 @@ class JobPoster extends Component {
     // get user List
     
     const userid = Cookies.get('userid')   
-    this.props.getJobList(userid)
+    this.props.getJobList()
   }
   render () {
     return (      

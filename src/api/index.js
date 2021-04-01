@@ -20,8 +20,16 @@ export const reqUserList = (type) => ajax('/userlist', {type})
 //Create job 
 export const reqCreateJob = (job) => ajax('/createJob',job,'POST')
 
+//Get job detail
+export const reqJobDetail = (jobId) => ajax('/jobDetail',{jobId},'POST')
+
+//Update job 
+export const reqUpdateJob = (job) => ajax('/updateJob',job,'POST')
+//Delete job 
+export const reqDeleteJob = () => ajax('/deleteJob',{},'POST')
+
 //Get job list interface
-export const reqJobList = (posterId) => ajax('/joblist',{posterId})
+export const reqJobList = () => ajax('/joblist')
 
 // Get the current user's chat message list
 export const reqChatMsgList = () => ajax('/msglist')

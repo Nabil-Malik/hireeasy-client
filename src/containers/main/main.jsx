@@ -17,7 +17,7 @@ import Personal from '../personal/personal'
 import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 import CreateJob from '../createJob/createJob'
-// import JobDetail from '../../components/job-detail/job-detail'
+import JobDetail from '../../components/job-detail/job-detail'
 import Chat from '../chat/chat'
 
 
@@ -128,7 +128,7 @@ class Main extends Component {
           }
           <Route path='/jobPosterInfo' component={JobPosterInfo}/>
           <Route path='/jobSeekerInfo' component={JobSeekerInfo}/>
-          {/* <Route path='/job/:jobid' component={JobDetail}/> */}
+          <Route path='/jobDetail/:jobid' component={JobDetail}/>
           <Route path='/chat/:userid' component={Chat}/>
 
           <Route component={NotFound}/>

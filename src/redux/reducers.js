@@ -10,6 +10,7 @@ import {
   RESET_USER,
   RECEIVE_USER_LIST,
   CREATE_JOB,
+  JOB_DETAIL,
   RECEIVE_JOB_LIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG,
@@ -62,17 +63,28 @@ const initJob = {
     applicantId:[],
     posterId:'',
     postDate:Date.now(),
-    expireAfter:'' ,
-    msg: '', 
-    redirectTo: ''   
+    expireAfter:'',
+    msg:''
 }
 // The reducer that generates the job state
 function createJob(state=initJob, action) {
   switch (action.type) {
     case CREATE_JOB: // data is job      
-      return {...action.data, redirectTo:'/jobPoster'}
+      return {...action.data,redirectTo:"/"}
     case ERROR_MSG: // data is msg
-      return {...state, msg: action.data}    
+      return {...initJob, msg: action.data}    
+    default:
+      return state
+  }
+}
+
+// The reducer that generates the job state
+function jobDetail(state=initJob, action) {
+  switch (action.type) {
+    case JOB_DETAIL: // data is job      
+      return action.data
+    case ERROR_MSG: // data is msg
+      return {...initJob, msg: action.data}    
     default:
       return state
   }
@@ -83,7 +95,7 @@ const initJobList = []
 function jobList(state=initJobList, action) {
   switch (action.type) {
     case RECEIVE_JOB_LIST:  // data is userList
-      return action.data
+      return action.data    
     default:
       return state
   }
@@ -140,6 +152,7 @@ export default combineReducers({
   user,
   userList,
   createJob,
+  jobDetail,
   jobList,
   chat
 })

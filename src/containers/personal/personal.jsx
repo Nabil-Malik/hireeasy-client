@@ -43,8 +43,7 @@ class Personal extends React.Component {
         <List renderHeader={() => 'Information'}>
           <Item multipleLine>
             <Brief>Position: {post}</Brief>
-            <Brief>Introduction: {info}</Brief>
-            {/* {salary ? <Brief>Salary: {salary}</Brief> : null} */}
+            <Brief>Introduction: {info}</Brief>           
           </Item>
         </List>
         <WhiteSpace/>
