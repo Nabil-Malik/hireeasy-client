@@ -17,7 +17,7 @@ class UserList extends Component {
     const {userList} = this.props
 
     return (
-      <WingBlank style={{marginBottom:50, marginTop:50}}>
+      <WingBlank style={{marginBottom:20, marginTop:20}}>
         <QueueAnim type='scale'>
           {
             userList.map(user => (
@@ -30,9 +30,8 @@ class UserList extends Component {
                   />
                   <Body>
                   <div>position: {user.post}</div>
-                  {user.company ? <div>company: {user.company}</div> : null}
-                  {/* {user.salary ? <div>salary: {user.salary}</div> : null}
-                  <div>others: {user.info}</div> */}
+                  {user.company ? <div>company: {user.company}</div> : null} 
+                  <button>Chat with me</button>
                   </Body>
                 </Card>
               </div>

@@ -3,23 +3,31 @@ Job seeker main interface routing container component
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getUserList} from '../../redux/actions'
+//import {getUserList,getJobs} from '../../redux/actions'
+import {getJobs} from '../../redux/actions'
 
-import UserList from '../../components/user-list/user-list'
+//import UserList from '../../components/user-list/user-list'
+import JobList from '../../components/job-list/job-list'
  
 class JobSeeker extends Component {
   componentDidMount () {
     // get userList
-    this.props.getUserList('jobPoster')
+    // this.props.getUserList('jobPoster')
+    //const careerObjective=this.props.user.careerObjective
+    this.props.getJobs()
+
   }
   render () {
     return (
-      <UserList userList={this.props.userList}/>
+      <div>
+      {/* <UserList userList={this.props.userList}/> */}
+      <JobList jobList={this.props.jobList}/>
+      </div>
     )
   }
 }
 
 export default connect(
-  state => ({userList: state.userList}),
-  {getUserList}
+  state => ({jobList:state.jobList}),
+  {getJobs}
 )(JobSeeker)

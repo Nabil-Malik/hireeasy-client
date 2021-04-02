@@ -8,10 +8,12 @@ import {
   AUTH_SUCCESS,
   ERROR_MSG,
   RECEIVE_USER,
+  CANDIDATES,
   RESET_USER,
   RECEIVE_USER_LIST,
   CREATE_JOB,
   JOB_DETAIL,
+  JOB_POSTER,
   RECEIVE_JOB_LIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG,
@@ -23,10 +25,13 @@ import {
   reqUpdateUser,
   reqUser,
   reqUserList,
+  reqVeiwCandidates,
   reqCreateJob,
   reqJobDetail,
   reqUpdateJob,
   reqDeleteJob,
+  reqGetJobs,
+  reqGetJobPoster,
   reqJobList,
   reqChatMsgList,
   reqReadMsg
@@ -102,9 +107,10 @@ const receiveUserList = (userList) => ({type: RECEIVE_USER_LIST, data: userList}
 const postJob=(job)=>({type:CREATE_JOB,data:job})
 // Synchronous action for getting job detail
 const jobDetail=(jobDetail)=>({type:JOB_DETAIL,data:jobDetail})
+// Synchronous action for getting job poster
+const jobPoster=(jobPoster)=>({type:JOB_POSTER,data:jobPoster})
 
-// Synchronous action for updatting job
-//const updatedJob=(updatedJob)=>({type:UPDATE_JOB,data:})
+const candidates=(candidates)=>({type:CANDIDATES,data:candidates})
 // Synchronous action for receiving job list
 const receiveJobList = (jobList) => ({type: RECEIVE_JOB_LIST, data: jobList})
 // Synchronous action for receiving message list
@@ -216,10 +222,34 @@ export const getUserList = (type) => {
   }
 }
 
+// Asynchronous action to get user list
+export const viewCandidates = (jobId) => {
+  return async dispatch => {
+    // Perform asynchronous ajax request
+    const response = await reqVeiwCandidates(jobId)
+    const result = response.data
+    // After getting the result, distribute a synchronous action
+    if(result.code===0) {
+      dispatch(candidates(result.data))
+    }
+  }
+}
+// Asynchronous action to get user list
+export const getJobPoster = (posterId) => {
+  return async dispatch => {
+    // Perform asynchronous ajax request
+    const response = await reqGetJobPoster(posterId)
+    const result = response.data
+    // After getting the result, distribute a synchronous action
+    if(result.code===0) {
+      dispatch(jobPoster(result.data))
+    }
+  }
+}
 
 // Create job asynchronous action
 export const createJob = (job) => {
-  const {jobTitle, jobType, content,company,position,expire} = job
+  const {jobTitle, jobType, content,company,position} = job
   // Do the front-end check of the form, if it fails, return a synchronous action of errorMsg
   if(!jobTitle) {
     return errorMsg('Job Title is required!')
@@ -279,13 +309,19 @@ export const updateJob=(job)=>{
 // Asynchronous action to delete job
 export const deleteJob=()=>{
   return async dispatch => {
-    const response = await reqDeleteJob()
-    // const result = response.data
-    // if(result.code===0) { // Update Successfully: data
-    //   dispatch(jobDetail(result.data))
-    // } else { // Update failed: msg
-    //   dispatch(errorMsg(result.msg))
-    // }
+    await reqDeleteJob()
+  }
+}
+export const getJobs=()=>{
+  return async dispatch=>{
+    const response= await reqGetJobs()
+    const result= response.data
+    if(result.code===0){
+      dispatch(receiveJobList(result.data))
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
   }
 }
 // Asynchronous action to get job list

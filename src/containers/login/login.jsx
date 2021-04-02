@@ -18,7 +18,6 @@ import {login} from '../../redux/actions'
 
 import Logo from '../../components/logo/logo'
 
-const ListItem = List.Item
 
 class Login extends Component {
   state = {

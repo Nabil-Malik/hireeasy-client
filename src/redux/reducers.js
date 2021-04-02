@@ -14,7 +14,9 @@ import {
   RECEIVE_JOB_LIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG,
-  MSG_READ
+  MSG_READ,
+  JOB_POSTER,
+  CANDIDATES
 } from './action-types'
 
 import {getRedirectTo} from '../utils'
@@ -101,6 +103,24 @@ function jobList(state=initJobList, action) {
   }
 }
 
+const initJobPoster=[]
+function jobPoster(state=initJobPoster,action){
+  switch(action.type){
+    case JOB_POSTER:
+      return action.data
+    default:
+      return state
+  }
+}
+
+function candidates(state=initJobPoster,action){
+  switch(action.type){
+    case CANDIDATES:
+      return action.data
+    default:
+      return state
+  }
+}
 
 const initChat = {
   users: {}, // Object of all user information Attribute name: userid, attribute value is: {username, avatar}
@@ -153,6 +173,8 @@ export default combineReducers({
   userList,
   createJob,
   jobDetail,
+  jobPoster,
+  candidates,
   jobList,
   chat
 })

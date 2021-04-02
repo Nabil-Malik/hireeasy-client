@@ -18,6 +18,7 @@ import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 import CreateJob from '../createJob/createJob'
 import JobDetail from '../../components/job-detail/job-detail'
+import CandidateList from '../../components/user-list/candidate-list'
 import Chat from '../chat/chat'
 
 
@@ -31,18 +32,16 @@ class Main extends Component {
     {
       path: '/jobPoster', //Routing path
       component: JobPoster,
-      //title: 'Job seeker list',
       title: 'Job list',
       icon: 'jobseeker',
-      //text: 'Job seeker',
       text: 'Job list'
     },
     {
       path: '/jobSeeker', // Routing path
       component: JobSeeker,
-      title: 'Job poster list',
+      title: 'Job list',
       icon: 'jobposter',
-      text: 'Job poster'
+      text: 'Job list'
     },
     {
       path: '/createJob', // Routing path
@@ -129,6 +128,7 @@ class Main extends Component {
           <Route path='/jobPosterInfo' component={JobPosterInfo}/>
           <Route path='/jobSeekerInfo' component={JobSeekerInfo}/>
           <Route path='/jobDetail/:jobid' component={JobDetail}/>
+          <Route path='/viewCandidates' render={()=><CandidateList candidateList={this.props.candidates} />}/>
           <Route path='/chat/:userid' component={Chat}/>
 
           <Route component={NotFound}/>
@@ -140,6 +140,6 @@ class Main extends Component {
 }
 
 export default connect(
-  state => ({user: state.user, unReadCount: state.chat.unReadCount}),
+  state => ({user: state.user, unReadCount: state.chat.unReadCount,candidates:state.candidates}),
   {getUser}
 )(Main)

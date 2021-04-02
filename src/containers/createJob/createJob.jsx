@@ -29,9 +29,9 @@ class CreateJob extends Component {
   }  
 
   // Call when click to register
-  createJob = () => {    
-    this.props.createJob(this.state)
-    //console.log(this.state);
+  createJob = () => {  
+      // Read the userid in the cookie    
+    this.props.createJob(this.state)    
     this.props.history.replace('/')   
   }
 
@@ -47,10 +47,9 @@ class CreateJob extends Component {
     this.props.history.replace('/login')
   }
 
-  render() {
-       // Read the userid in the cookie
-    this.state.posterId=Cookies.get('userid')
-   
+  render() {    
+    this.state.posterId=Cookies.get('userid') 
+           
     // If not, automatically redirect to the login interface
     if(! this.state.posterId) {
       return <Redirect to='/login'/>

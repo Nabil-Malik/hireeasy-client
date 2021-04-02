@@ -16,6 +16,8 @@ export const reqUser = () => ajax('/user')
 
 //Get user list interface
 export const reqUserList = (type) => ajax('/userlist', {type})
+//Get candidates interface
+export const reqVeiwCandidates=(jobId)=>ajax('/viewCandidates',{jobId})
 
 //Create job 
 export const reqCreateJob = (job) => ajax('/createJob',job,'POST')
@@ -27,7 +29,10 @@ export const reqJobDetail = (jobId) => ajax('/jobDetail',{jobId},'POST')
 export const reqUpdateJob = (job) => ajax('/updateJob',job,'POST')
 //Delete job 
 export const reqDeleteJob = () => ajax('/deleteJob',{},'POST')
-
+//Get jobs
+export const reqGetJobs=()=>ajax('/getJobs')
+//Get jobPoster
+export const reqGetJobPoster=(posterId)=>ajax('/getJobPoster',{posterId},'POST')
 //Get job list interface
 export const reqJobList = () => ajax('/joblist')
 

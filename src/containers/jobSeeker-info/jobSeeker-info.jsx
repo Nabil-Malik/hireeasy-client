@@ -8,13 +8,12 @@ import {Redirect} from 'react-router-dom'
 import {NavBar, InputItem, Button, TextareaItem} from 'antd-mobile'
 import AvatarSelector from '../../components/avatar-selector/avatar-selector'
 import {updateUser} from '../../redux/actions'
-
 class JobSeekerInfo extends Component {
 
   state = {
     avatar: '',
-    post: '',
     info: '',
+    careerObjective:''
   }
 
   // Update avatar status
@@ -22,6 +21,10 @@ class JobSeekerInfo extends Component {
     this.setState({
       avatar
     })
+  }
+
+  onScrollChange = (careerObjective) => {
+    console.log(careerObjective);
   }
 
   handleChange = (name, value) => {
@@ -44,10 +47,11 @@ class JobSeekerInfo extends Component {
     }
 
     return (
+
       <div>
         <NavBar>Complete job seekr information</NavBar>
         <AvatarSelector setAvatar={this.setAvatar}/>
-        <InputItem placeholder='Please enter a career objective' onChange={val => {this.handleChange('post', val)}}>Objective:</InputItem>
+        <InputItem placeholder='Please enter a career objective' onChange={val => {this.handleChange('careerObjective', val)}}>Objective:</InputItem>                
         <TextareaItem title="Skills:"
                       placeholder='Please enter skills'
                       rows={3} onChange={val => {this.handleChange('info', val)}}/>

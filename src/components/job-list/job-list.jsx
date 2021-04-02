@@ -3,11 +3,10 @@ UI component that displays the list of jobs
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {WingBlank, WhiteSpace, Card,Button} from 'antd-mobile'
+import {WingBlank, WhiteSpace, Card} from 'antd-mobile'
 import {withRouter} from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim'
-import { connect } from 'react-redux'
-import {getJobDetail} from '../../redux/actions'
+
 
 const Header = Card.Header
 const Body = Card.Body
@@ -27,7 +26,7 @@ class JobList extends Component {
             jobList.map(job => (
               <div key={job._id}>
                 <WhiteSpace/>
-                <Card onClick={()=>{ this.props.history.push(`/jobDetail/${job._id}`)}}>  
+                <Card style={{backgroundColor:'#FFE4E1'}} onClick={()=>{ this.props.history.push(`/jobDetail/${job._id}`)}}>  
                   <Header                   
                     extra={job.jobTitle}
                   />
