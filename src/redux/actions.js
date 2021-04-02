@@ -34,7 +34,8 @@ import {
   reqGetJobPoster,
   reqJobList,
   reqChatMsgList,
-  reqReadMsg
+  reqReadMsg,
+  reqApplyHistory
 } from '../api'
 
 
@@ -339,4 +340,21 @@ export const getJobList = () => {
     }
   }
 }
+
+export const applyHistory = () => {
+  return async dispatch => {
+    // Perform asynchronous ajax request
+    const response = await reqApplyHistory()
+    const result = response.data
+    // After getting the result, distribute a synchronous action
+    if(result.code===0) {
+      dispatch(receiveJobList(result.data))
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
+  }
+}
+
+
 

@@ -9,7 +9,7 @@ import {
   Button
 } from 'antd-mobile'
 import {connect} from 'react-redux'
-import {getJobDetail,updateJob,deleteJob,getJobPoster} from '../../redux/actions'
+import {getJobDetail,updateJob,deleteJob,getJobPoster,updateUser} from '../../redux/actions'
 import UserList from '../../components/user-list/user-list'
 import ApplyJob from '../../components/apply-job/apply-job'
 import ViewCandidates from '../../components/view-candidates/view-candidates'
@@ -61,19 +61,50 @@ class JobDetail extends React.Component {
         text: 'Yes',
         onPress: ()=> {
           this.props.deleteJob();
+          const appliedJob=this.props.user.appliedJob
+          const jobId=this.props.jobDetail._id;
+          const pos2=appliedJob.indexOf(jobId)
+          appliedJob.splice(pos2,1);
+          this.props.updateUser(this.props.user);
           this.props.history.replace('/')
         }
       }
     ])    
   }
-
+  deleteApplication=()=>{
+    Modal.alert('Delete application', 'Are you sure to delete this application?', [
+      {text: 'Cancle'},
+      {
+        text: 'Yes',
+        onPress: ()=> {
+          const applicant=this.props.jobDetail.applicant
+          const appliedJob=this.props.user.appliedJob
+          const userId=this.props.user._id;
+          const jobId=this.props.jobDetail._id;
+          const pos2=appliedJob.indexOf(jobId)
+          const pos=applicant.indexOf(userId)
+          applicant.splice(pos,1);
+          appliedJob.splice(pos2,1);
+          this.props.updateJob(this.props.jobDetail);
+          this.props.updateUser(this.props.user);
+          this.props.history.replace('/applyHistory')
+        }
+      }
+    ])
+  }
   toMain = () => {
     posterId=''
     this.props.history.replace('/')
   }
   render() {
     const userType=this.props.user.type;
-    const {jobTitle,jobType,content,company,position,expire}=this.props.jobDetail;                    
+    const userId=this.props.user._id;
+    const applicant=this.props.jobDetail.applicant
+    const {jobTitle,jobType,content,company,position,expire}=this.props.jobDetail; 
+    console.log(userId)  
+    if (applicant) {
+      console.log(applicant.indexOf(userId)) 
+    }             
         return (
         <div>      
            <NavBar>Job Detail</NavBar>         
@@ -127,8 +158,8 @@ class JobDetail extends React.Component {
               </List>
               <WhiteSpace/>  
               <Button type='primary' onClick={this.getJobPoster}>See job poster</Button>             
-              {posterId===''?'':<UserList userList={this.props.jobPoster}/> }               
-              <ApplyJob jobId={this.props.match.params.jobid}/>
+              {posterId===''?'':<UserList userList={this.props.jobPoster}/> }
+              {applicant? applicant.indexOf(userId)>-1?<Button type='warning' onClick={this.deleteApplication}>Delete my application</Button>:<ApplyJob jobId={this.props.match.params.jobid}/>:''}
               <WhiteSpace/>
               </div>
             }
@@ -142,5 +173,5 @@ class JobDetail extends React.Component {
 
 export default connect(
     state=>({jobDetail:state.jobDetail,user:state.user,jobPoster:state.jobPoster}),
-    {getJobDetail,updateJob,deleteJob,getJobPoster}
+    {getJobDetail,updateJob,deleteJob,getJobPoster,updateUser}
 ) (JobDetail)

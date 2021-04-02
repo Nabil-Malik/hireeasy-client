@@ -41,3 +41,6 @@ export const reqChatMsgList = () => ajax('/msglist')
 
 // Modify the specified message as read
 export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')
+
+// Modify the specified message as read
+export const reqApplyHistory = () => ajax('/applyHistory')

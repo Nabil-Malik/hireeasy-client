@@ -18,6 +18,7 @@ import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 import CreateJob from '../createJob/createJob'
 import JobDetail from '../../components/job-detail/job-detail'
+import ApplyHistory from '../../components/apply-history/apply-history'
 import CandidateList from '../../components/user-list/candidate-list'
 import Chat from '../chat/chat'
 
@@ -49,6 +50,13 @@ class Main extends Component {
       title: 'Create Job',
       icon: 'jobposter',
       text: 'Create Job'
+    },
+    {
+      path: '/applyHistory', // Routing path
+      component: ApplyHistory,
+      title: 'Your applications',
+      icon: 'jobposter',
+      text: 'Apply History'
     },
     {
       path: '/message', // Routing path
@@ -111,6 +119,7 @@ class Main extends Component {
       if(user.type==='jobPoster') {
         // Hide the second of the array
         navList[1].hide = true
+        navList[3].hide=true
       } else {
         // Hide the first of the array
         navList[0].hide = true

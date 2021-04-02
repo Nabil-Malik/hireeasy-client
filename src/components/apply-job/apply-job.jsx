@@ -1,36 +1,49 @@
 import React, {Component} from 'react'
 import {Button,Modal} from 'antd-mobile'
 import {connect} from 'react-redux'
-import {updateUser} from '../../redux/actions'
+import {updateUser,updateJob} from '../../redux/actions'
+import { withRouter } from 'react-router'
 
   class ApplyJob extends Component {
-    state={
-        appliedJob:''
-    }
-    save = (user) => {
+    
+    save = (user,job) => {
         this.props.updateUser(user)
+        this.props.updateJob(job)
       }
+    
+    
     handleOnclick=()=>{
         const jobId=this.props.jobId;
+        const userId=this.props.user._id;
+        console.log(userId)
+
         const arr=this.props.user.appliedJob;
+        const arr2=this.props.jobDetail.applicant;
+
         if(typeof(arr)==='undefined'){
-            this.props.user.appliedJob=new Array();
+          this.props.user.appliedJob=new Array();
         }
+        if(typeof(arr2)==='undefined'){
+          this.props.jobDetail.applicant=new Array();
+        }
+        
         if(typeof(arr)!=='undefined'&&arr.indexOf(jobId)<=-1){
-            console.log( arr.indexOf(jobId))
-            console.log( arr.jobId);
+
             this.props.user.appliedJob.push(jobId);
+            this.props.jobDetail.applicant.push(userId);
             console.log( this.props.user.appliedJob)
-            this.save(this.props.user)   
+            //console.log(this.props.job)  
             Modal.alert('Apply job', 'Congratulation! You successfully applied this job.', [            
                 {
                 text: 'OK',
+                onPress: ()=> {
+                  this.save(this.props.user,this.props.jobDetail) 
+                  this.props.history.replace('/')
+                }
                 }
             ])   
         }       
         else{
-            console.log( arr.indexOf(jobId));
-            console.log(arr[arr.indexOf(jobId)])
             Modal.alert('Apply job', 'You have already applied this job.', [            
                 {
                   text: 'OK',
@@ -45,7 +58,7 @@ import {updateUser} from '../../redux/actions'
         )
     }    
   }
-  export default connect(
-    state=>({user:state.user}),
-    {updateUser}
-  )(ApplyJob)
+  export default withRouter( connect(
+    state=>({user:state.user,jobDetail:state.jobDetail}),
+    {updateUser,updateJob}
+  )(ApplyJob))
