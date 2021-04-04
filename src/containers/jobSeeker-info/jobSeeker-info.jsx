@@ -23,10 +23,6 @@ class JobSeekerInfo extends Component {
     })
   }
 
-  onScrollChange = (careerObjective) => {
-    console.log(careerObjective);
-  }
-
   handleChange = (name, value) => {
     // debugger
     this.setState({

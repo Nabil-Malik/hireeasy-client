@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button,Modal} from 'antd-mobile'
+import {Button} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {viewCandidates} from '../../redux/actions'
 import { withRouter } from 'react-router'
@@ -10,9 +10,7 @@ import { withRouter } from 'react-router'
     handleOnclick=()=>{ 
         const jobId=this.props.jobId;                                      
         this.props.viewCandidates(jobId);
-        console.log(this.props);
-        this.props.history.replace('/viewCandidates')
-        console.log(this.props.candidates);           
+        this.props.history.replace('/viewCandidates')           
     }
     render(){
         return(

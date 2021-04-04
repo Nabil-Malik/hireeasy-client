@@ -18,7 +18,6 @@ export const reqUser = () => ajax('/user')
 export const reqUserList = (type) => ajax('/userlist', {type})
 //Get candidates interface
 export const reqVeiwCandidates=(jobId)=>ajax('/viewCandidates',{jobId})
-
 //Create job 
 export const reqCreateJob = (job) => ajax('/createJob',job,'POST')
 
@@ -44,3 +43,9 @@ export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')
 
 // Modify the specified message as read
 export const reqApplyHistory = () => ajax('/applyHistory')
+
+export const reqReportUser = (report) => ajax('/reportUser',report,'POST')
+
+export const reqReportList = () => ajax('/reportList')
+export const reqFindUser= (username) => ajax('/findUser',{username},'POST')
+export const reqLockAccount=(user)=>ajax('/lockAccount',user,'POST')

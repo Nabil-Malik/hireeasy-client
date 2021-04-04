@@ -11,16 +11,12 @@ import JobList from '../../components/job-list/job-list'
  
 class JobSeeker extends Component {
   componentDidMount () {
-    // get userList
-    // this.props.getUserList('jobPoster')
-    //const careerObjective=this.props.user.careerObjective
     this.props.getJobs()
 
   }
   render () {
     return (
       <div>
-      {/* <UserList userList={this.props.userList}/> */}
       <JobList jobList={this.props.jobList}/>
       </div>
     )

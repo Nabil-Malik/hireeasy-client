@@ -8,8 +8,6 @@ import JobList from '../../components/job-list/job-list'
 
 class JobPoster extends Component {
   componentDidMount () {
-    const userType=this.props.user.type;
-    console.log(userType); 
     this.props.getJobList()
   }
   render () {

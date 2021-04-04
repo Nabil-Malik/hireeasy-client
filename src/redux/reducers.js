@@ -16,7 +16,11 @@ import {
   RECEIVE_MSG,
   MSG_READ,
   JOB_POSTER,
-  CANDIDATES
+  CANDIDATES,
+  REPORT_DETAIL,
+  ADMIN_USER,
+  REPORT_LIST,
+  USER_DETAIL
 } from './action-types'
 
 import {getRedirectTo} from '../utils'
@@ -39,6 +43,8 @@ function user(state=initUser, action) {
       return action.data
     case RESET_USER: //data is msg
       return {...initUser, msg: action.data}
+    case ADMIN_USER:
+      return {...action.data,redirectTo:'/admin'}
     default:
       return state
   }
@@ -122,12 +128,63 @@ function candidates(state=initJobPoster,action){
   }
 }
 
+const initReport={
+  reportTitle:'',
+  reportedUserName:'',
+  reportReason:'', 
+  reportDate:'',
+  msg:''
+}
+
+function reportDetail(state=initReport,action){
+  switch(action.type){
+    case REPORT_DETAIL:
+      return action.data
+    case ERROR_MSG: // data is msg
+      return {...initReport, msg: action.data}   
+    default:
+      return state
+  }
+}
+
+const initReportList=[]
+function reportList(state=initReportList,action){
+  switch(action.type){
+    case REPORT_LIST:
+      return action.data
+    default:
+      return state
+  }
+}
+
+const initUserDetail = {
+  username: '', // UserName
+  type: '', // userType: jobSeeker/jobPoster
+  avatar: '', // Avatar
+  post: '', // position
+  info: '', // personal info
+  company: '', // company
+  careerObjective:'',
+  isBlock:false,
+  msg:''
+}
+function userDetail(state=initUserDetail,action){
+  switch(action.type){
+    case USER_DETAIL:
+      return action.data
+    case ERROR_MSG:
+      return {...initUserDetail,msg:action.data}
+    default:
+      return state
+  }
+}
+
+
 const initChat = {
   users: {}, // Object of all user information Attribute name: userid, attribute value is: {username, avatar}
   chatMsgs: [], // Array of all related msgs of the current user
   unReadCount: 0 // Total unread count
 }
-
 // The reducer that generated the chat state
 function chat(state=initChat, action) {
   switch (action.type) {
@@ -176,7 +233,10 @@ export default combineReducers({
   jobPoster,
   candidates,
   jobList,
-  chat
+  chat,
+  reportDetail,
+  reportList,
+  userDetail
 })
 
 

@@ -17,7 +17,11 @@ import {
   RECEIVE_JOB_LIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG,
-  MSG_READ
+  MSG_READ,
+  REPORT_DETAIL,
+  ADMIN_USER,
+  REPORT_LIST,
+  USER_DETAIL
 } from './action-types'
 import {
   reqRegister,
@@ -35,7 +39,11 @@ import {
   reqJobList,
   reqChatMsgList,
   reqReadMsg,
-  reqApplyHistory
+  reqApplyHistory,
+  reqReportUser,
+  reqReportList,
+  reqFindUser,
+  reqLockAccount
 } from '../api'
 
 
@@ -90,10 +98,6 @@ export const readMsg = (from, to) => {
   }
 }
 
-
-
-
-
 // Synchronous action for successful authorization
 const authSuccess = (user) => ({type: AUTH_SUCCESS, data: user})
 // Synchronous action of error message
@@ -110,7 +114,7 @@ const postJob=(job)=>({type:CREATE_JOB,data:job})
 const jobDetail=(jobDetail)=>({type:JOB_DETAIL,data:jobDetail})
 // Synchronous action for getting job poster
 const jobPoster=(jobPoster)=>({type:JOB_POSTER,data:jobPoster})
-
+//Synchronization action that get all candidates
 const candidates=(candidates)=>({type:CANDIDATES,data:candidates})
 // Synchronous action for receiving job list
 const receiveJobList = (jobList) => ({type: RECEIVE_JOB_LIST, data: jobList})
@@ -120,6 +124,15 @@ const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, 
 const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
 //Synchronization action that read a chat message
 const msgRead = ({count, from, to}) => ({type: MSG_READ, data: {count, from, to}})
+//Synchronization action that get job detail
+const reportDetail = (reportDetail) => ({type: REPORT_DETAIL, data: reportDetail})
+//Synchronization action that login as admin
+const adminUser=(admin)=>({type:ADMIN_USER,data:admin})
+//Synchronization action that get report list
+const reportList=(reportList)=>({type:REPORT_LIST,data:reportList})
+//Synchronization action that get user detail
+const userDetail=(userDetail)=>({type:USER_DETAIL,data:userDetail})
+
 
 // Register asynchronous action
 export const register = (user) => {
@@ -128,7 +141,10 @@ export const register = (user) => {
   if(!username) {
     return errorMsg('User Name is required!')
   } else if(password!==password2) {
-    return errorMsg('Password is required!')
+    return errorMsg('Password should match!')
+  }
+  if(username==='admin'||username==='Admin'){
+    return errorMsg('The user already exist!')
   }
   // The form data is valid, return an asynchronous action function that sends an ajax request
   return async dispatch => {
@@ -175,7 +191,11 @@ export const login = (user) => {
       getMsgList(dispatch, result.data._id)
       // Dispatch authorized synchronization actions
       dispatch(authSuccess(result.data))
-    } else { 
+    }
+    if(result.code===3){
+      dispatch(adminUser(result.data))
+    } 
+    else { 
       // Dispatch synchronization error messages
       dispatch(errorMsg(result.msg))
     }
@@ -278,6 +298,7 @@ export const createJob = (job) => {
     }
   }
 }
+
 // Asynchronous action to get job detail
 export const getJobDetail=(jobId)=>{
   return async dispatch => {
@@ -313,6 +334,8 @@ export const deleteJob=()=>{
     await reqDeleteJob()
   }
 }
+
+//Asynchronous action to get jobs as job seeker
 export const getJobs=()=>{
   return async dispatch=>{
     const response= await reqGetJobs()
@@ -325,6 +348,7 @@ export const getJobs=()=>{
     }
   }
 }
+
 // Asynchronous action to get job list
 export const getJobList = () => {
   return async dispatch => {
@@ -341,6 +365,7 @@ export const getJobList = () => {
   }
 }
 
+// Asynchronous action to apply history
 export const applyHistory = () => {
   return async dispatch => {
     // Perform asynchronous ajax request
@@ -356,5 +381,59 @@ export const applyHistory = () => {
   }
 }
 
+// Asynchronous action to report a user
+export const reportUser=(report)=>{
+  return async dispatch=>{
+    const response=await reqReportUser(report)
+    const result =response.data
+    if(result.code===0){
+      dispatch(reportDetail(result.data));
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
+  }
+}
+
+// Asynchronous action to get report list
+export const getReportList=()=>{
+  return async dispatch=>{
+    const response=await reqReportList()
+    const result =response.data
+    if(result.code===0){
+      dispatch(reportList(result.data));
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
+  }
+}
+
+// Asynchronous action to find a user
+export const findUser=(username)=>{
+  return async dispatch=>{
+    const response=await reqFindUser(username)
+    const result =response.data
+    if(result.code===0){
+      dispatch(userDetail(result.data));
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
+  }
+}
+
+export const lockAccount=(user)=>{
+  return async dispatch=>{
+    const response=await reqLockAccount(user)
+    const result=response.data
+    if(result.code===0){
+      dispatch(userDetail(result.data));
+    }
+    else{
+      dispatch(errorMsg(result.msg));
+    }
+  }
+}
 
 

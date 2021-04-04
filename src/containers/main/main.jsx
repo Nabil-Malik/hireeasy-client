@@ -6,7 +6,7 @@ import React, {Component} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Cookies from 'js-cookie'  // Objects that can manipulate front-end cookies set()/get()/remove()
-import {NavBar} from 'antd-mobile'
+import {NavBar,Icon,Popover} from 'antd-mobile'
 
 import JobPosterInfo from '../jobPoster-info/jobPoster-info'
 import JobSeekerInfo from '../jobSeeker-info/jobSeeker-info'
@@ -20,11 +20,17 @@ import CreateJob from '../createJob/createJob'
 import JobDetail from '../../components/job-detail/job-detail'
 import ApplyHistory from '../../components/apply-history/apply-history'
 import CandidateList from '../../components/user-list/candidate-list'
+import ReportUser from '../report-user/report-user'
 import Chat from '../chat/chat'
+import Admin from '../admin/admin'
+
 
 
 import {getRedirectTo} from '../../utils'
 import {getUser} from '../../redux/actions'
+
+
+const Item = Popover.Item;
 
 class Main extends Component {
 
@@ -55,7 +61,7 @@ class Main extends Component {
       path: '/applyHistory', // Routing path
       component: ApplyHistory,
       title: 'Your applications',
-      icon: 'jobposter',
+      icon: 'applyhistory',
       text: 'Apply History'
     },
     {
@@ -84,13 +90,28 @@ class Main extends Component {
       this.props.getUser()
     }
   }
-
+      
+  state = {
+    visible: false
+  };
+  onSelect = () => {
+    this.setState({
+      visible: false
+    });
+    this.props.history.replace('/reportUser')
+  };
   render() {
 
     // Read the userid in the cookie
     const userid = Cookies.get('userid')
     // If not, automatically redirect to the login interface
-    if(!userid) {
+    
+    if(this.props.user.type==='admin'){
+      return(
+        <Admin/>
+      )
+    }
+    else if(!userid) {
       return <Redirect to='/login'/>
     }
     // If have userid, read the user status in redux
@@ -126,10 +147,19 @@ class Main extends Component {
         navList[2].hide = true
       }
     }
-
     return (
       <div>
-        {currentNav ? <NavBar className='sticky-header'>{currentNav.title}</NavBar> : null}
+        {currentNav ? <NavBar rightContent={<Popover mask
+            overlayClassName="fortest"
+            overlayStyle={{ color: 'currentColor' }}
+            visible={this.state.visible}
+            overlay={<Item>Report user</Item>}
+            onSelect={this.onSelect}
+          >
+           
+            <Icon type="ellipsis" />
+          </Popover>
+        } className='sticky-header'>{currentNav.title}</NavBar> : null}
         <Switch>
           {
             navList.map(nav => <Route key={nav.path} path={nav.path} component={nav.component}/>)
@@ -139,7 +169,7 @@ class Main extends Component {
           <Route path='/jobDetail/:jobid' component={JobDetail}/>
           <Route path='/viewCandidates' render={()=><CandidateList candidateList={this.props.candidates} />}/>
           <Route path='/chat/:userid' component={Chat}/>
-
+          <Route path='/reportUser' component={ReportUser}/>
           <Route component={NotFound}/>
         </Switch>
         {currentNav ? <NavFooter navList={navList} unReadCount={unReadCount}/> : null}
