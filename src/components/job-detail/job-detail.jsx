@@ -23,6 +23,7 @@ class JobDetail extends React.Component {
         content:'',
         company:'',
         position:'',    
+        postCode: '',
         expire:''          
       }  
     componentDidMount () {
@@ -98,7 +99,7 @@ class JobDetail extends React.Component {
     const userType=this.props.user.type;
     const userId=this.props.user._id;
     const applicant=this.props.jobDetail.applicant
-    const {jobTitle,jobType,content,company,position,expire}=this.props.jobDetail;             
+    const {jobTitle,jobType,content,company,position,postCode, expire}=this.props.jobDetail;             
         return (
         <div>      
            <NavBar>Job Detail</NavBar>         
@@ -120,6 +121,9 @@ class JobDetail extends React.Component {
                   <InputItem placeholder={position} onChange={val => {this.handleChange('position', val)}}>Position:</InputItem>
                   <WhiteSpace/>
                   <WhiteSpace/>
+                  <InputItem placeholder={postCode} onChange={val => {this.handleChange('postCode', val)}}>Post Code:</InputItem>
+                  <WhiteSpace/>
+                  <WhiteSpace/>
                   <InputItem placeholder={expire} onChange={val => {this.handleChange('expire', val)}}>Expire:</InputItem>
                   <WhiteSpace/>                                                                              
                 </List>
@@ -127,6 +131,7 @@ class JobDetail extends React.Component {
                 <Button type="primary" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.updateJob}>Update Job</Button>  
                 <ViewCandidates  jobId={this.props.match.params.jobid}/>
                 <Button type="warning" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.deleteJob}>Delete Job</Button>                      
+                <Button  type="info" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }}  onClick={()=>{ this.props.history.push(`/jobGeo/${this.props.match.params.jobid}`); }  }> Map</Button>               
                 <WhiteSpace/>
              </div>
             :

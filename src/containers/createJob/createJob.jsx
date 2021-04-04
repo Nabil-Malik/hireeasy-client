@@ -29,13 +29,18 @@ class CreateJob extends Component {
     posterId:''         
   }  
 
+  componentDidMount () {
+     // Read the userid in the cookie  
+     const posterId=Cookies.get('userid');
+     console.log("load posterId from cookie: "+posterId);
+     this.setState({
+       posterId:posterId
+     }) ;
+  }
+
   // Call when click to register
   createJob = () => {  
-      // Read the userid in the cookie  
-    const posterId=Cookies.get('userid') 
-    this.setState({
-      posterId:posterId
-    })
+     
     this.props.createJob(this.state)    
     this.props.history.replace('/')   
   }
@@ -76,6 +81,9 @@ class CreateJob extends Component {
             <WhiteSpace/>
             <WhiteSpace/>
             <InputItem placeholder='Position' onChange={val => {this.handleChange('position', val)}}>Position:</InputItem>
+            <WhiteSpace/>
+            <WhiteSpace/>
+            <InputItem placeholder='Post Code ' onChange={val => {this.handleChange('postCode', val)}}>Post Code:</InputItem>
             <WhiteSpace/>
             <WhiteSpace/>
             <InputItem placeholder='Expire After' onChange={val => {this.handleChange('expire', val)}}>Expire:</InputItem>

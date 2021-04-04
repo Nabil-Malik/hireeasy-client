@@ -26,13 +26,16 @@ class JobList extends Component {
             jobList.map(job => (
               <div key={job._id}>
                 <WhiteSpace/>
-                <Card style={{backgroundColor:'#FFE4E1'}} onClick={()=>{ this.props.history.push(`/jobDetail/${job._id}`)}}>  
+                <Card style={{backgroundColor:'#FFE4E1'}} >  
                   <Header                   
                     extra={job.jobTitle}
+                    onClick={()=>{ this.props.history.push(`/jobDetail/${job._id}`)}}
                   />
                   <Body>
                   <div>position: {job.position}</div>
-                  {job.company ? <div>company: {job.company}</div> : null}                  
+                 
+                  {job.company ? <div>company: {job.company}</div> : null}    
+                  <div>location: {job.postCode} <button onClick={()=>{ this.props.history.push(`/jobGeo/${job._id}`); }  }> Map</button></div>              
                   </Body>
                 </Card>
               </div>

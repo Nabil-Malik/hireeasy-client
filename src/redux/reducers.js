@@ -68,6 +68,7 @@ const initJob = {
     content:'',
     company:'',
     position:'',
+    postCode:'',
     applicantId:[],
     posterId:'',
     postDate:Date.now(),
