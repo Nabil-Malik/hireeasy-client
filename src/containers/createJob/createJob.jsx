@@ -73,6 +73,9 @@ class CreateJob extends Component {
             <InputItem placeholder='Position' onChange={val => {this.handleChange('position', val)}}>Position:</InputItem>
             <WhiteSpace/>
             <WhiteSpace/>
+            <InputItem placeholder='Post Code ' onChange={val => {this.handleChange('postCode', val)}}>Post Code:</InputItem>
+            <WhiteSpace/>
+            <WhiteSpace/>
             <InputItem placeholder='Expire After' onChange={val => {this.handleChange('expire', val)}}>Expire:</InputItem>
             <WhiteSpace/>                        
             <WhiteSpace/>

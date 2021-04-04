@@ -32,7 +32,9 @@ class JobList extends Component {
                   />
                   <Body>
                   <div>position: {job.position}</div>
-                  {job.company ? <div>company: {job.company}</div> : null}                  
+                 
+                  {job.company ? <div>company: {job.company}</div> : null}    
+                  <div>location: {job.postCode}</div>              
                   </Body>
                 </Card>
               </div>

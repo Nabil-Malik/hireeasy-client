@@ -44,6 +44,10 @@ function initIO(dispatch, userid) {
   if(!io.socket) {
     // Connect to the server, get the connection object with the server
     io.socket = io('ws://localhost:4000') 
+
+    //if connect to the cloud server
+    //const socket = io('https://hireeasy-server.herokuapp.com')  
+
     // Bind the monitor, receive the message sent by the server
     io.socket.on('receiveMsg', function (chatMsg) {
       console.log('The client receives the message sent by the server', chatMsg)
@@ -250,7 +254,7 @@ export const getJobPoster = (posterId) => {
 
 // Create job asynchronous action
 export const createJob = (job) => {
-  const {jobTitle, jobType, content,company,position} = job
+  const {jobTitle, jobType, content,company,position, postCode} = job
   // Do the front-end check of the form, if it fails, return a synchronous action of errorMsg
   if(!jobTitle) {
     return errorMsg('Job Title is required!')
@@ -262,6 +266,8 @@ export const createJob = (job) => {
     return errorMsg('Company is required!')
   }else if(!position){
     return errorMsg('Position is required!')
+  }else if(!postCode){
+    return errorMsg('Post Code is required!')
   }
   // The form data is valid, return an asynchronous action function that sends an ajax request
   return async dispatch => {

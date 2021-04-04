@@ -23,6 +23,7 @@ class JobDetail extends React.Component {
         content:'',
         company:'',
         position:'',    
+        postCode: '',
         expire:''          
       }  
     componentDidMount () {
@@ -99,8 +100,9 @@ class JobDetail extends React.Component {
   render() {
     const userType=this.props.user.type;
     const userId=this.props.user._id;
-    const applicant=this.props.jobDetail.applicant
-    const {jobTitle,jobType,content,company,position,expire}=this.props.jobDetail; 
+    const applicant=this.props.jobDetail.applicant;
+
+    const {jobTitle, jobType, content,company,position, postCode, expire}=this.props.jobDetail; 
     console.log(userId)  
     if (applicant) {
       console.log(applicant.indexOf(userId)) 
@@ -124,6 +126,9 @@ class JobDetail extends React.Component {
                   <WhiteSpace/>
                   <WhiteSpace/>
                   <InputItem placeholder={position} onChange={val => {this.handleChange('position', val)}}>Position:</InputItem>
+                  <WhiteSpace/>
+                  <WhiteSpace/>
+                  <InputItem placeholder={postCode} onChange={val => {this.handleChange('postCode', val)}}>Post Code:</InputItem>
                   <WhiteSpace/>
                   <WhiteSpace/>
                   <InputItem placeholder={expire} onChange={val => {this.handleChange('expire', val)}}>Expire:</InputItem>
