@@ -95,7 +95,7 @@ class Chat extends Component {
     return (
       <div id='chat-page'>
         <NavBar
-          icon={<Icon type='left'/>}
+          icon={<Icon type='left' text='left'/>}
           className='sticky-header'
           onLeftClick={()=> this.props.history.goBack()}
         >

@@ -33,7 +33,6 @@ class JobDetail extends React.Component {
    
     getJobPoster=()=>{
       posterId=this.props.jobDetail.posterId;    
-      console.log("posterId"+posterId); 
       this.props.getJobPoster(posterId);      
     }
    
@@ -41,7 +40,6 @@ class JobDetail extends React.Component {
   handleChange = (name, val) => {
     const {jobTitle,jobType,content,company,position,expire}=this.props.jobDetail;
       this.setState({jobTitle:jobTitle,jobType:jobType,content:content,company:company,position:position,expire:expire},function(){
-        console.log(this.state.jobType);
         this.setState({
           [name]: val  // The attribute name is not name, but the value of the name variable
         })
@@ -50,7 +48,6 @@ class JobDetail extends React.Component {
   }
   
   updateJob=()=>{
-    console.log(this.state)
     this.props.updateJob(this.state);
     this.props.history.replace('/')
   }
@@ -64,7 +61,8 @@ class JobDetail extends React.Component {
           this.props.deleteJob();
           const appliedJob=this.props.user.appliedJob
           const jobId=this.props.jobDetail._id;
-          const pos2=appliedJob.indexOf(jobId)
+          //Remove applied job from user 
+          const pos2=appliedJob.indexOf(jobId)        
           appliedJob.splice(pos2,1);
           this.props.updateUser(this.props.user);
           this.props.history.replace('/')
@@ -100,13 +98,8 @@ class JobDetail extends React.Component {
   render() {
     const userType=this.props.user.type;
     const userId=this.props.user._id;
-    const applicant=this.props.jobDetail.applicant;
-
-    const {jobTitle, jobType, content,company,position, postCode, expire}=this.props.jobDetail; 
-    console.log(userId)  
-    if (applicant) {
-      console.log(applicant.indexOf(userId)) 
-    }             
+    const applicant=this.props.jobDetail.applicant
+    const {jobTitle,jobType,content,company,position,postCode, expire}=this.props.jobDetail;             
         return (
         <div>      
            <NavBar>Job Detail</NavBar>         
@@ -136,7 +129,6 @@ class JobDetail extends React.Component {
                 </List>
                 <WhiteSpace/>   
                 <Button type="primary" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.updateJob}>Update Job</Button>  
-                {/* <Button type="primary" inline size="small" style={{ margin: '0px 6px 0px 6px',backgroundColor:'#f0e68c',color:'black' }} onClick={this.createJob}>View Candidates</Button>             */}
                 <ViewCandidates  jobId={this.props.match.params.jobid}/>
                 <Button type="warning" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.deleteJob}>Delete Job</Button>                      
                 <Button  type="info" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }}  onClick={()=>{ this.props.history.push(`/jobGeo/${this.props.match.params.jobid}`); }  }> Map</Button>               
