@@ -34,7 +34,7 @@ class JobList extends Component {
                   <div>position: {job.position}</div>
                  
                   {job.company ? <div>company: {job.company}</div> : null}    
-                  <div>location: {job.postCode}</div>              
+                  <div>location: {job.postCode} <button onClick={()=>{ this.props.history.push(`/jobGeo/${job._id}`); return true;}  }> Map</button></div>              
                   </Body>
                 </Card>
               </div>

@@ -18,6 +18,7 @@ import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 import CreateJob from '../createJob/createJob'
 import JobDetail from '../../components/job-detail/job-detail'
+import JobGeo from '../../components/job-geo/jobGeo'
 import ApplyHistory from '../../components/apply-history/apply-history'
 import CandidateList from '../../components/user-list/candidate-list'
 import Chat from '../chat/chat'
@@ -137,6 +138,7 @@ class Main extends Component {
           <Route path='/jobPosterInfo' component={JobPosterInfo}/>
           <Route path='/jobSeekerInfo' component={JobSeekerInfo}/>
           <Route path='/jobDetail/:jobid' component={JobDetail}/>
+          <Route path='/jobGeo/:jobid' component={JobGeo}/>
           <Route path='/viewCandidates' render={()=><CandidateList candidateList={this.props.candidates} />}/>
           <Route path='/chat/:userid' component={Chat}/>
 
