@@ -1,18 +1,9 @@
 import React from 'react'
 import {
-  NavBar,
-  WingBlank,
-  List,
-  InputItem,
-  WhiteSpace,
-  Modal,
   Button
 } from 'antd-mobile'
 import {connect} from 'react-redux'
 import {getJobDetail,updateJob,deleteJob,getJobPoster,updateUser} from '../../redux/actions'
-import UserList from '../../components/user-list/user-list'
-import ApplyJob from '../../components/apply-job/apply-job'
-import ViewCandidates from '../../components/view-candidates/view-candidates'
 import MapSection from '../../components/map/Map'
 
 import Geocode from "react-geocode";
@@ -92,10 +83,8 @@ class JobGeo extends React.Component {
     this.props.history.replace('/')
   }
   render() {
-    const userType=this.props.user.type;
-    const userId=this.props.user._id;
     
-    const {jobTitle, jobType, content,company,position, postCode, expire}=this.props.jobDetail; 
+    const {jobTitle,company, postCode,}=this.props.jobDetail; 
     console.log("job location: " + postCode);
     this.queryLatLng(postCode, jobTitle, company);
 

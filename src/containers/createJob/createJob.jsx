@@ -69,7 +69,7 @@ class CreateJob extends Component {
       <div>               
         <WingBlank>
           <List>                                   
-            <WhiteSpace style={{marginTop: 80+ 'px'}}/>
+            <WhiteSpace style={{marginTop: 50+ 'px'}}/>
             <InputItem placeholder='Job Title' onChange={val => {this.handleChange('jobTitle', val)}}>Job Title:</InputItem>
             <WhiteSpace/>
             <InputItem placeholder='Job Type' onChange={val => {this.handleChange('jobType', val)}}>Job Type:</InputItem>

@@ -48,7 +48,13 @@ class JobDetail extends React.Component {
   }
   
   updateJob=()=>{
-    this.props.updateJob(this.state);
+    const {jobTitle,jobType,content,company,postCode,position,expire}=this.state
+    if(jobTitle===''&&jobType===''&&content===''&&postCode===''&&company===''&&position==''&&expire===''){
+      this.props.updateJob(this.props.jobDetail);
+    }
+    else{
+      this.props.updateJob(this.state);
+    } 
     this.props.history.replace('/')
   }
 
@@ -107,7 +113,7 @@ class JobDetail extends React.Component {
             { userType==='jobPoster'? 
                <div>
                 <List>                                   
-                  <WhiteSpace style={{marginTop: 40+ 'px'}}/>
+                  <WhiteSpace />
                   <InputItem placeholder={jobTitle} onChange={jobTitle=>this.handleChange('jobTitle',jobTitle)}>Job Title:</InputItem>
                   <WhiteSpace/>
                   <InputItem placeholder={jobType} onChange={val => {this.handleChange('jobType', val)}}>Job Type:</InputItem>
@@ -131,7 +137,7 @@ class JobDetail extends React.Component {
                 <Button type="primary" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.updateJob}>Update Job</Button>  
                 <ViewCandidates  jobId={this.props.match.params.jobid}/>
                 <Button type="warning" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.deleteJob}>Delete Job</Button>                      
-                <Button  type="info" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }}  onClick={()=>{ this.props.history.push(`/jobGeo/${this.props.match.params.jobid}`); }  }> Map</Button>               
+                <Button type="primary"  style={{backgroundColor:'coral', color:'black' }}  onClick={()=>{ this.props.history.push(`/jobGeo/${this.props.match.params.jobid}`); }  }> Map</Button>               
                 <WhiteSpace/>
              </div>
             :
