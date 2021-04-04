@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@iconify/icons-mdi": "^1.1.13",
+    "@iconify/react": "^1.1.4",
     "antd-mobile": "^2.3.4",
     "axios": "^0.18.0",
     "babel": "^6.23.0",
@@ -14,6 +16,7 @@
     "rc-queue-anim": "^1.5.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-geocode": "^0.2.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",

@@ -139,6 +139,7 @@ class JobDetail extends React.Component {
                 {/* <Button type="primary" inline size="small" style={{ margin: '0px 6px 0px 6px',backgroundColor:'#f0e68c',color:'black' }} onClick={this.createJob}>View Candidates</Button>             */}
                 <ViewCandidates  jobId={this.props.match.params.jobid}/>
                 <Button type="warning" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }} onClick={this.deleteJob}>Delete Job</Button>                      
+                <Button  type="info" inline size="small" style={{ margin: '0px 6px 0px 6px',color:'black' }}  onClick={()=>{ this.props.history.push(`/jobGeo/${this.props.match.params.jobid}`); }  }> Map</Button>               
                 <WhiteSpace/>
              </div>
             :

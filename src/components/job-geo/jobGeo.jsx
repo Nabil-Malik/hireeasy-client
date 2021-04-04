@@ -13,26 +13,12 @@ import {getJobDetail,updateJob,deleteJob,getJobPoster,updateUser} from '../../re
 import UserList from '../../components/user-list/user-list'
 import ApplyJob from '../../components/apply-job/apply-job'
 import ViewCandidates from '../../components/view-candidates/view-candidates'
-import GoogleMapReact from 'google-map-react';
-import { Icon } from 'semantic-ui-react'
+import MapSection from '../../components/map/Map'
+
+import Geocode from "react-geocode";
+
 
 let posterId
-
-const iconStyle = {  
-  borderRadius: '100px',  
-  boxShadow: '3px 3px 1px #888888'
-} 
-
-const CompanyMarker = ({ text }) => <div ><Icon name="user circle outline" 
-color='blue' 
-size='big' 
-style={iconStyle}
-/>{text}</div>;
- 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
 
 class JobGeo extends React.Component {  
       state = {
@@ -43,11 +29,62 @@ class JobGeo extends React.Component {
         position:'',    
         postCode: '',
         expire:'' ,
+        location: null,
+        locationMessage: '',
    
       }  
     componentDidMount () {
       const jobId= this.props.match.params.jobid;
-      this.props.getJobDetail(jobId);               
+      this.props.getJobDetail(jobId);   
+      this.queryLatLng();   
+    }
+
+    queryLatLng = (postCode, jobTitle, company) => {
+      console.log("query the address in map: " +postCode);
+      if (!postCode) {
+        return;
+      }
+      // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+      Geocode.setApiKey("TODO: SETUP YOUR GOOGLE GEOCODE API KEY");
+
+      // set response language. Defaults to english.
+      Geocode.setLanguage("en");
+
+      // set response region. Its optional.
+      // A Geocoding request with region=ca (Canada) will return the Canada city.
+      Geocode.setRegion("ca");
+
+      // set location_type filter . Its optional.
+      // google geocoder returns more that one address for given lat/lng.
+      // In some case we need one address as response for which google itself provides a location_type filter.
+      // So we can easily parse the result for fetching address components
+      // ROOFTOP, RANGE_INTERPOLATED, GEOMETRIC_CENTER, APPROXIMATE are the accepted values.
+      // And according to the below google docs in description, ROOFTOP param returns the most accurate result.
+      Geocode.setLocationType("ROOFTOP");
+
+      // Enable or disable logs. Its optional.
+      //Geocode.enableDebug();
+
+      // Get latitude & longitude from address.
+      Geocode.fromAddress(postCode).then(
+        (response) => {
+          const { lat, lng } = response.results[0].geometry.location;
+          console.log(lat, lng);
+          console.log(response.results);
+          const location = {
+            address: jobTitle + " @ " + company, //response.results[0].formatted_address,
+            lat: lat,
+            lng: lng,
+
+          };
+          this.setState({location: location, locationMessage: ''})
+        },
+        (error) => {
+          console.error(error);
+          this.setState({locationMessage: error});
+        }
+      );
+
     }
    
   toMain = () => {
@@ -57,33 +94,33 @@ class JobGeo extends React.Component {
   render() {
     const userType=this.props.user.type;
     const userId=this.props.user._id;
-    const applicant=this.props.jobDetail.applicant;
-
+    
     const {jobTitle, jobType, content,company,position, postCode, expire}=this.props.jobDetail; 
-    console.log(userId)  
-    const center = {lat: 43.651070, lng: -79.347015};
-    const zoom = 10;
+    console.log("job location: " + postCode);
+    this.queryLatLng(postCode, jobTitle, company);
+
+    const zoom = 17;
+
+    const location = {
+      address: postCode,
+    } 
                 
         return (
         <div> 
-          <div>***{jobTitle}***</div> 
-          <div  style={{ width: '600px', height: '800px' }}>
-          <GoogleMapReact 
-            bootstrapURLKeys={{
-              key: "todo: SETUP YOUR GOOGLE MAP API KEY", 
-              language: 'en'
-            }}
-            defaultCenter={center}
-            center={center}
-            defaultZoom={zoom}
+          <div><h2 >View Jobs in the Map</h2>
+          <ul><li>{jobTitle}</li></ul>
+          </div> 
+          <div>
+          {this.state.locationMessage && (<span>{this.state.locationMessag}</span>)}
+         {this.state.location ? 
+         (
+            <MapSection location={this.state.location} zoomLevel={zoom}></MapSection>
+          
+            
+         ) : (
+            <span>Loading the location in map: {postCode}... </span>
+         )}
 
-          >
-          <CompanyMarker
-            lat={43.69}
-            lng={-79.39}
-            text="My Marker"
-          />
-          </GoogleMapReact>
           </div>    
           <div> <Button type='primary' onClick={this.toMain}>Back to Main</Button></div>
         </div>
