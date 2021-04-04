@@ -29,13 +29,18 @@ class CreateJob extends Component {
     posterId:''         
   }  
 
+  componentDidMount () {
+     // Read the userid in the cookie  
+     const posterId=Cookies.get('userid');
+     console.log("load posterId from cookie: "+posterId);
+     this.setState({
+       posterId:posterId
+     }) ;
+  }
+
   // Call when click to register
   createJob = () => {  
-      // Read the userid in the cookie  
-    const posterId=Cookies.get('userid') 
-    this.setState({
-      posterId:posterId
-    })
+     
     this.props.createJob(this.state)    
     this.props.history.replace('/')   
   }
