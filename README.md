@@ -131,3 +131,7 @@
 local server: "http://localhost:4000"
 Cloud server: "https://hireeasy-server.herokuapp.com"
 
+How to Set Up a google map project and Get Google API key?
+https://developers.google.com/maps/gmp-get-started#create-project
+
+
