@@ -131,3 +131,9 @@
 local server: "http://localhost:4000"
 Cloud server: "https://hireeasy-server.herokuapp.com"
 
+# How to Set Up a google map project and Get Google API key?
+https://developers.google.com/maps/gmp-get-started#create-project
+* follow the steps and get the google api key which applied in the project
+* use the Google API Key to replace the apikey value in jobGeoMap.jsx, GoogleMap.jsx and Map.jsx
+
+
