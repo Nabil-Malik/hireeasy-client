@@ -40,9 +40,9 @@ class Main extends Component {
     {
       path: '/jobPoster', //Routing path
       component: JobPoster,
-      title: 'Job list',
+      title: 'Jobs you created',
       icon: 'jobseeker',
-      text: 'Job list'
+      text: 'My Jobs'
     },
     {
       path: '/jobSeeker', // Routing path
@@ -63,7 +63,7 @@ class Main extends Component {
       component: ApplyHistory,
       title: 'Your applications',
       icon: 'applyhistory',
-      text: 'Apply History'
+      text: 'My Applications'
     },
     {
       path: '/message', // Routing path

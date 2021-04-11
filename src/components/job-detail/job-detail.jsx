@@ -49,7 +49,7 @@ class JobDetail extends React.Component {
   
   updateJob=()=>{
     const {jobTitle,jobType,content,company,postCode,position,expire}=this.state
-    if(jobTitle===''&&jobType===''&&content===''&&postCode===''&&company===''&&position==''&&expire===''){
+    if(jobTitle===''&&jobType===''&&content===''&&postCode===''&&company===''&&position===''&&expire===''){
       this.props.updateJob(this.props.jobDetail);
     }
     else{

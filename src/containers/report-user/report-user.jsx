@@ -51,7 +51,7 @@ class ReportUser extends Component {
             <WhiteSpace/>
             <InputItem placeholder='Reported user name' onChange={val => {this.handleChange('reportedUserName', val)}}>User name:</InputItem>
             <WhiteSpace/>
-            <TextareaItem placeholder='Report reason' onChange={val => {this.handleChange('reportReason', val)}}>Reason:</TextareaItem>               
+            <TextareaItem title='Reason:' placeholder='Report reason' rows={5} onChange={val => {this.handleChange('reportReason', val)}}></TextareaItem>               
           </List>
         <Button  style={{top:'260px'}} type='primary' onClick={this.reportUser}>Submit report</Button> 
         </WingBlank>
