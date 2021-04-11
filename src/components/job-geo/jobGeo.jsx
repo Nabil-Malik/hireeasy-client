@@ -12,26 +12,42 @@ import Geocode from "react-geocode";
 let posterId
 
 class JobGeo extends React.Component {  
-      state = {
-        jobTitle:'',
-        jobType:'',
-        content:'',
-        company:'',
-        position:'',    
-        postCode: '',
-        expire:'' ,
-        location: null,
-        locationMessage: '',
-   
-      }  
+      
+      constructor(props) {
+        super(props);
+        this.state = {
+          jobTitle:'',
+          jobType:'',
+          content:'',
+          company:'',
+          position:'',    
+          postCode: '',
+          expire:'' ,
+          location: null,
+          locationMessage: '',
+     
+        };
+      }
+    
     componentDidMount () {
       const jobId= this.props.match.params.jobid;
-      this.props.getJobDetail(jobId);   
-      this.queryLatLng();   
+      this.props.getJobDetail(jobId).then(resp => {
+        console.log("after call get job detail, call back ");
+        console.log(resp);
+        const jobDetail = resp.data;
+        this.setState({postCode: jobDetail.postCode, jobTitle: jobDetail.jobTitle, company: jobDetail.company});
+      });   
+    }
+
+    componentDidUpdate (prevProps, prevState, snapshot) {
+      if(prevState.postCode!=this.state.postCode) {
+        this.queryLatLng(this.state.postCode, this.state.jobTitle, this.state.company);
+      }
+
     }
 
     queryLatLng = (postCode, jobTitle, company) => {
-      console.log("query the address in map: " +postCode);
+      console.log("query the address in map: " +postCode + " for job "+jobTitle+" at company "+ company);
       if (!postCode) {
         return;
       }
@@ -82,13 +98,14 @@ class JobGeo extends React.Component {
     posterId=''
     this.props.history.replace('/')
   }
+
+
   render() {
     
     const {jobTitle,company, postCode,}=this.props.jobDetail; 
     console.log("job location: " + postCode);
-    this.queryLatLng(postCode, jobTitle, company);
 
-    const zoom = 17;
+    const zoom = 14;
 
     const location = {
       address: postCode,

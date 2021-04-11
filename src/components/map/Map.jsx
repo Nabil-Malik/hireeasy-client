@@ -13,7 +13,7 @@ const LocationPin = ({ text }) => (
 )
 
 const Map = ({ location, zoomLevel }) => (
-    <div className="google-map" style={{ width: '800px', height: '800px' }}>
+    <div className="google-map" style={{ width: '400px', height: '400px' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "TODO: SETUP YOUR GOOGLE MAPS API KEY" }}
         center={location}
