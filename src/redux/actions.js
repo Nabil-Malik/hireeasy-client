@@ -313,10 +313,10 @@ export const getJobDetail=(jobId)=>{
     const result = response.data
     // After getting the result, distribute a synchronous action
     if(result.code===0) {
-      dispatch(jobDetail(result.data))
+      return dispatch(jobDetail(result.data))
     }
     else{
-      dispatch(errorMsg(result.msg));
+      return dispatch(errorMsg(result.msg));
     }
   }
 }

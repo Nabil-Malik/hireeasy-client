@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react'
 
 let GOOGLE_MAP_API_KEY = "TODO: SETUP YOUR GOOGLE MAPS API KEY";
 
+
 export default class GoogleMap extends Component {
   googleMapRef = React.createRef()
 
