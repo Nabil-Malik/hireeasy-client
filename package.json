@@ -26,15 +26,15 @@
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
     "babel-plugin-import": "^1.7.0",
-    "less": "^4.1.1",
-    "less-loader": "^8.1.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.1.0",
     "react-app-rewired": "^1.5.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "1.1.4",
     "redux-devtools-extension": "^2.13.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-scripts build",
+    "build": "react-app-rewired build",
     "eject": "react-scripts eject",
     "client": "serve build"
   },
