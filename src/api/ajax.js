@@ -3,7 +3,7 @@ Function module that can send ajax request
 The return value of the function is a promise object
  */
 import axios from 'axios'
-const baseUrl = 'https://hireeasy.herokuapp.com/'
+const baseUrl = ''
 // const baseUrl = 'http://localhost:4000'
 export default function ajax(url, data={}, type='GET') {
   // var xhr =new XMLHttpRequest()
