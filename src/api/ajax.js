@@ -6,6 +6,8 @@ import axios from 'axios'
 const baseUrl = 'https://hireeasy.herokuapp.com/'
 // const baseUrl = 'http://localhost:4000'
 export default function ajax(url, data={}, type='GET') {
+  // var xhr =new XMLHttpRequest()
+  // xhr.withCredentials=true;
   url = baseUrl + url
   if(type==='GET') { // Send GET request
     // Combine request parameter string
