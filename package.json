@@ -21,7 +21,8 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^2.0.3",
-    "socket.io": "^2.1.0"
+    "socket.io": "^2.1.0",
+    "node":"^14.15.4"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
