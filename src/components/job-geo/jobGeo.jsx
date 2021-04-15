@@ -40,7 +40,7 @@ class JobGeo extends React.Component {
     }
 
     componentDidUpdate (prevProps, prevState, snapshot) {
-      if(prevState.postCode!=this.state.postCode) {
+      if(prevState.postCode!==this.state.postCode) {
         this.queryLatLng(this.state.postCode, this.state.jobTitle, this.state.company);
       }
 
@@ -52,7 +52,7 @@ class JobGeo extends React.Component {
         return;
       }
       // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-      Geocode.setApiKey("TODO: SETUP YOUR GOOGLE GEOCODE API KEY");
+      Geocode.setApiKey("AIzaSyDggkkuy-dnGwvmeO7s3PyW7UIGPd7k0IM");
 
       // set response language. Defaults to english.
       Geocode.setLanguage("en");
@@ -102,14 +102,10 @@ class JobGeo extends React.Component {
 
   render() {
     
-    const {jobTitle,company, postCode,}=this.props.jobDetail; 
+    const {jobTitle,postCode}=this.props.jobDetail; 
     console.log("job location: " + postCode);
 
     const zoom = 14;
-
-    const location = {
-      address: postCode,
-    } 
                 
         return (
         <div> 
